@@ -2,7 +2,6 @@ package Action;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 class GridListener implements MouseListener
 {
 

@@ -1,36 +1,30 @@
 package UI;
 
 import java.awt.GridLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import ImageOp.ImgFunc;
 
 public class Grid
 {
-	private JLabel grid[][];
-	private JPanel gridPanel;
-	
+	private static Cell grid[][];
+	private static JPanel gridPanel;
 	
 	public Grid()
 	{
 		gridPanel = new JPanel();
 		gridPanel.setLayout(new GridLayout(10,10,0,0));
-		grid = new JLabel[10][10];
+		grid = new Cell[10][10];
 		for (int i = 0; i < 10; i++)
 			for (int j = 0; j < 10; j++)
 			{
-				if ((grid[i][j] = ImgFunc.getDefaultImage()) == null)
+				grid[i][j] = new Cell(i, j);
+				if (grid[i][j].getImage() == null)
 					return;
-				initMouseListener(grid[i][j]);
-				gridPanel.add(grid[i][j]);
+				
+				gridPanel.add(grid[i][j].getImage());
 			}
 		Battleship.setInfo("Board setup complete");
 	}
-	public static void initMouseListener(JLabel J)
-	{
-		J.addMouseListener(new GridListener());
-	}
-	public JLabel get(int x, int y)
+	public Cell get(int x, int y)
 	{
 		if (x < 0 || x > 9 
 			|| y < 0 || y > 9)
@@ -41,5 +35,18 @@ public class Grid
 	public JPanel getPanel()
 	{
 		return gridPanel;
+	}
+	public static void updateBoard()
+	{
+		gridPanel = new JPanel();
+		gridPanel.setLayout(new GridLayout(3,3,0,0));
+		for (int i = 0; i < 10; i++)
+		{
+			for (int j = 0; j < 10; j++)
+			{
+				gridPanel.add(grid[i][j].getImage());
+				
+			}
+		}
 	}
 }

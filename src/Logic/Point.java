@@ -2,7 +2,8 @@ package Logic;
 
 public class Point 
 {
-	int x, y;
+	public int x;
+	public int y;
 	public Point(int xp, int yp)
 	{
 		x = xp;
@@ -11,5 +12,9 @@ public class Point
 	public boolean equals(Point p)
 	{
 		return (p.x == x && p.y == y);
+	}
+	public String toString()
+	{
+		return "(" + x + ", " + y + ")";
 	}
 }
