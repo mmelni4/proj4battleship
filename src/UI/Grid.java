@@ -36,6 +36,12 @@ public class Grid
 	{
 		return gridPanel;
 	}
+	
+	public void setStatus(int x, int y, int status)
+	{
+		grid[x][y].setStatus(status);
+	}
+	
 	public static void updateBoard()
 	{
 		gridPanel = new JPanel();
