@@ -32,7 +32,8 @@ public class Battleship extends JFrame
 		
 		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
 		gamePanel.add(infoLabel, BorderLayout.SOUTH);
-		
+		Menu menu = new Menu();
+	    setJMenuBar(menu); // adds menu object to frame
 		this.add(gamePanel);
 		this.setSize(500, 500);
 		this.setTitle("Battleship");
