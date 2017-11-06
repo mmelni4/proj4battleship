@@ -11,7 +11,7 @@ public class Grid
 	public Grid()
 	{
 		gridPanel = new JPanel();
-		gridPanel.setLayout(new GridLayout(10,10,0,0));
+		gridPanel.setLayout(new GridLayout(10,10,1,1));
 		grid = new Cell[10][10];
 		for (int i = 0; i < 10; i++)
 			for (int j = 0; j < 10; j++)
