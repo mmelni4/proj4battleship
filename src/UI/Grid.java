@@ -24,7 +24,7 @@ public class Grid
 			}
 		Battleship.setInfo("Board setup complete");
 	}
-	public Cell get(int x, int y)
+	public static Cell get(int x, int y)
 	{
 		if (x < 0 || x > 9 
 			|| y < 0 || y > 9)

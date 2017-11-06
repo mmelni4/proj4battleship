@@ -36,9 +36,9 @@ public class Ship
 	{
 		return dir;
 	}
-	public JLabel getBodyImage()
+	public JLabel getBodyImage(int index)
 	{
-		return body[0];	
+		return body[index];	
 		
 	}
 }

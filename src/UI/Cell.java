@@ -43,7 +43,7 @@ public class Cell
 	}
 	private void setImage(JLabel image)
 	{
-		img = image;
+		img.setIcon(image.getIcon());
 	}
 	
 	//set Status of current situation in cell
@@ -72,7 +72,11 @@ public class Cell
 			return false;
 		ship = s;
 		this.status = 1;
-		setImage(s.getBodyImage());
+		for (int i = 0; i < s.getLength(); i++)
+		{
+			Grid.get(pos.x, pos.y - i).setImage(s.getBodyImage(i));;
+		}
+		//ImgFunc.setShipImage(img);
 		return true;
 	}
 	private void addListener()
@@ -80,12 +84,13 @@ public class Cell
 		img.addMouseListener(new MouseListener()
 				{
 					@Override
-					public void mouseClicked(MouseEvent arg0) {
-						if (addShip(new Carrier(Direction.WEST, pos)))
+					public void mouseClicked(MouseEvent arg0)
+					{
+						if (addShip(new Carrier(Direction.EAST, pos)))
 							Battleship.setInfo("Ship set at " + pos);
 						else
 							Battleship.setInfo("Error adding ship at " + pos);
-						//Grid.updateBoard();
+						Battleship.setInfo("Ship set at " + pos);
 					}
 
 					@Override

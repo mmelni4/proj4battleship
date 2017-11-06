@@ -11,12 +11,18 @@ public class Carrier extends Ship
 	{
 		super();
 		body = new JLabel[5];
-		body[0] = ImgFunc.getShipImage();
+		for(int i = 0; i < len; i++)
+			body[i] = ImgFunc.getCarrierImage(i);
 	}
 	public Carrier(Direction d, Point p)
 	{
 		super(d,p,len);
 		body = new JLabel[5];
-		body[0] = ImgFunc.getShipImage();
+		for(int i = 0; i < len; i++)
+			body[i] = ImgFunc.getCarrierImage(i);
+	}
+	public JLabel getBodyImage(int index)
+	{
+		return body[index];		
 	}
 }

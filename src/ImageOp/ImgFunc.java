@@ -16,6 +16,8 @@ import Boat.Ship;
 
 public class ImgFunc 
 {
+	private static int IMGSIZE_X = 60;
+	private static int IMGSIZE_Y = 60;
 	public static JLabel getShipImage()
 	{
 		JLabel picLabel = null;
@@ -24,7 +26,7 @@ public class ImgFunc
 		// Resize the image to fit into the JLabel
 		ImageIcon imageIcon = new ImageIcon("resources\\carrier\\bow.gif"); // load the image to a imageIcon
 		Image image = imageIcon.getImage(); // transform it 
-		Image newimg = image.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);  // transform it back
 		picLabel = new JLabel(imageIcon);
 		}
@@ -34,6 +36,60 @@ public class ImgFunc
 		}
 		return picLabel;
 	}
+	public static JLabel getCarrierImage(int segment)
+	{
+		JLabel picLabel = null;
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\carrier\\bow.gif"); // load the image to a imageIcon
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\carrier\\body1.gif"); // load the image to a imageIcon
+			break;
+		case 2:
+			imageIcon = new ImageIcon("resources\\carrier\\body2.gif"); // load the image to a imageIcon
+			break;
+		case 3:
+			imageIcon = new ImageIcon("resources\\carrier\\body3.gif"); // load the image to a imageIcon
+			break;
+		case 4:
+			imageIcon = new ImageIcon("resources\\carrier\\stern.gif"); // load the image to a imageIcon
+			break;
+		default:
+			imageIcon = null;
+		}
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel = new JLabel(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+		return picLabel;
+	}
+	public static void setShipImage(JLabel picLabel)
+	{
+		try
+		{
+		// Resize the image to fit into the JLabel
+		ImageIcon imageIcon = new ImageIcon("resources\\carrier\\bow.gif"); // load the image to a imageIcon
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel.setIcon(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+	}
 	public static JLabel getDefaultImage()
 	{
 		JLabel picLabel = null;
@@ -42,7 +98,7 @@ public class ImgFunc
 		// Resize the image to fit into the JLabel
 		ImageIcon imageIcon = new ImageIcon("resources\\water.gif"); // load the image to a imageIcon
 		Image image = imageIcon.getImage(); // transform it 
-		Image newimg = image.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);  // transform it back
 		picLabel = new JLabel(imageIcon);
 		}
@@ -60,7 +116,7 @@ public class ImgFunc
 		// Resize the image to fit into the JLabel
 		ImageIcon imageIcon = new ImageIcon(path); // load the image to a imageIcon
 		Image image = imageIcon.getImage(); // transform it 
-		Image newimg = image.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		Image newimg = image.getScaledInstance(IMGSIZE_X, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);  // transform it back
 		picLabel = new JLabel(imageIcon);
 		}
