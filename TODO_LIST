@@ -1,0 +1,14 @@
+UI:
+  Place ship on board
+  Ship selection
+  About/Help menus  
+Logic:
+  Put ship on board
+  rotate ship?
+  Ship health points
+  Win message?
+Socket:
+  Player to player communication
+  Fire at other player ship
+
+If there is anything missing from this list please add.
