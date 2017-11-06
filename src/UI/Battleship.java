@@ -7,11 +7,13 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 public class Battleship extends JFrame 
 {
 	static JPanel gamePanel;
 	static JPanel opponentGamePanel;
+	static JPanel guiParent;
 	
 	static JLabel infoLabel;
 	static JLabel opponentInfoLabel;
@@ -26,6 +28,9 @@ public class Battleship extends JFrame
 	}
 	public Battleship()
 	{
+		JPanel gui = new JPanel(new GridLayout(1,2,5,5));
+		gui.setBorder(new EmptyBorder(5,5,5,5));
+		
 		gamePanel = new JPanel();
 		opponentGamePanel = new JPanel();
 		
@@ -53,10 +58,12 @@ public class Battleship extends JFrame
 		Menu menu = new Menu();
 	    setJMenuBar(menu); // adds menu object to frame
 	    
-		this.add(gamePanel);
-		this.add(opponentGamePanel);
-		
-		this.setSize(500, 500);
+	    gui.add(opponentGamePanel);
+	    gui.add(gamePanel);
+	    
+	    this.add(gui); // add two panels side-by-side to the frame    
+	    
+		this.setSize(1000, 500);
 		
 		this.setTitle("Battleship");
 		
@@ -68,5 +75,6 @@ public class Battleship extends JFrame
 	public static void setInfo(String s)
 	{
 		infoLabel.setText(s);
+		opponentInfoLabel.setText(s);
 	}
 }
