@@ -2,8 +2,6 @@ package UI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -18,7 +16,7 @@ import javax.swing.WindowConstants;
  ******************************************************************/
 
 @SuppressWarnings("serial")
-public class Menu extends JMenuBar implements ActionListener, ItemListener{
+public class Menu extends JMenuBar implements ActionListener{
 
 	JMenu menu, submenu;
 	JMenuItem menuItem;
@@ -31,7 +29,7 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 			menuItem = new JMenuItem("Connection Info"); // Help on connection side of the program
 			menuItem.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(menu, 
+					JOptionPane.showMessageDialog(menuItem, 
 							"How Connection Side works:\n");
 					}	  
 			});
@@ -41,8 +39,21 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 				public void actionPerformed(ActionEvent e) {
 					JOptionPane.showMessageDialog(menu, 
 							"How to Play Battleship:"
-							+ "\nThe goal of the game is "
-							+ "to...");
+							+ "\nThe game is played on four squares"
+							+ "\nEach player has two grids, one for its own ships"
+							+ "\nOther grid is to keep track of opponent ships."
+							+ "\nStart with placing ships on your grid:"
+							+ "\n1 Aircraft Carrier of size 5"
+							+ "\n1 Battleship of size 4"
+							+ "\nOne destroyer of size 3"
+							+ "\nOne submarine of size 3"
+							+ "\nAnd one patrol boat of size 2"
+							+ "\nEach player has the same number of ships"
+							+ "\nShips cannot overlap and be placed outside of borders"
+							+ "\nOnce all the ships has been placed,"
+							+ "\nProceed to establish connection"
+							+ "\nWhen all of your/your opponent ships are sink"
+							+ "\nGame is over");
 				}
 			});
 			submenu.add(menuItem);
@@ -79,12 +90,6 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 	public void actionPerformed(ActionEvent e) {
 	//...Get information from the action event...
 	//...Display it in the text area...
-	}
-	
-	public void itemStateChanged(ItemEvent e) {
-	//...Get information from the item event...
-	//...Display it in the text area...
-	
 	}
 
 

@@ -1,7 +1,9 @@
 UI:
   Place ship on board
   Ship selection
-  About/Help menus  
+  Connection info 
+  Side by Side grids issue
+  
 Logic:
   Put ship on board
   rotate ship?
