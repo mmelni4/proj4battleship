@@ -7,9 +7,12 @@ public class Grid
 {
 	private static Cell grid[][];
 	private static JPanel gridPanel;
+	private int PlayerId;
 	
 	public Grid()
 	{
+		
+		PlayerId = 0;
 		gridPanel = new JPanel();
 		gridPanel.setLayout(new GridLayout(10,10,1,1));
 		grid = new Cell[10][10];
@@ -24,6 +27,24 @@ public class Grid
 			}
 		Battleship.setInfo("Board setup complete");
 	}
+	public Grid(int x)
+	{
+		PlayerId = x;
+		gridPanel = new JPanel();
+		gridPanel.setLayout(new GridLayout(10,10,1,1));
+		grid = new Cell[10][10];
+		for (int i = 0; i < 10; i++)
+			for (int j = 0; j < 10; j++)
+			{
+				grid[i][j] = new Cell(i, j);
+				if (grid[i][j].getImage() == null)
+					return;
+				
+				gridPanel.add(grid[i][j].getImage());
+			}
+		Battleship.setOpponentInfo("Opponent Board setup complete");
+	}
+	
 	public static Cell get(int x, int y)
 	{
 		if (x < 0 || x > 9 

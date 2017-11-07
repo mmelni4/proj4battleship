@@ -37,37 +37,36 @@ public class Battleship extends JFrame
 		opponentPanel = new JPanel();
 		
 		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
-		container.setBorder(new EmptyBorder(5,5,5,5));
+		container.setBorder(new EmptyBorder(10,10,10,10));
 		gamePanel.setLayout(new BorderLayout());
 		opponentPanel.setLayout(new BorderLayout());
 		
 		infoLabel = new JLabel("Your Game Status");
 		opponentLabel = new JLabel("Your Opponent Status");
 		
-		infoLabel2 = new JLabel("");
-		opponentLabel2 = new JLabel("");
+		infoLabel2 = new JLabel("Updates will be shown here");
+		opponentLabel2 = new JLabel("Updates will be shown here");
 		
 		gamePanel.add(infoLabel, BorderLayout.NORTH);
 		opponentPanel.add(opponentLabel, BorderLayout.NORTH);
 		
 		grid = new Grid();
-		opponentGrid = new Grid();		
+		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
+		gamePanel.add(infoLabel2, BorderLayout.SOUTH);
+		container.add(gamePanel);
 		//gamePanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		//grid.getPanel().setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
+		
+		opponentGrid = new Grid(1);
 	    opponentPanel.add(opponentGrid.getPanel(), BorderLayout.CENTER);
-
-	    gamePanel.add(infoLabel2, BorderLayout.SOUTH);
 		opponentPanel.add(opponentLabel2, BorderLayout.SOUTH);
+		container.add(opponentPanel);
 		
 		Menu menu = new Menu();
 	    setJMenuBar(menu); // adds menu object to frame
-	    
-		container.add(gamePanel);
-		container.add(opponentPanel);
-			    
+	    		    
 	    this.add(container); // add two panels side-by-side to the frame    	    
-		this.setSize(1000, 500);		
+		this.setSize(1100, 600);		
 		this.setTitle("Battleship");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
@@ -76,6 +75,9 @@ public class Battleship extends JFrame
 	public static void setInfo(String s)
 	{
 		infoLabel2.setText(s);
+	}
+	public static void setOpponentInfo(String s)
+	{
 		opponentLabel2.setText(s);
 	}
 }
