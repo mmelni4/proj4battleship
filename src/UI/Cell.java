@@ -6,8 +6,12 @@ import java.awt.event.MouseListener;
 import javax.swing.JLabel;
 
 import Boat.Carrier;
+import Boat.Destroyer;
 import Boat.Direction;
+import Boat.Gunship;
+import Boat.PatrolBoat;
 import Boat.Ship;
+import Boat.Submarine;
 import ImageOp.ImgFunc;
 import Logic.Point;
 
@@ -62,22 +66,54 @@ public class Cell
 		return status;
 	}
 	
-	public boolean validPos(Point p)
+	public boolean validPos(Ship s)
 	{
-		return !((p.x < 0 || p.x > 9) && (p.y < 0 || p.y > 9));
+		Direction d = s.getDirection();
+		int x = -1;
+		int y = -1;
+		switch(d)
+		{
+		case NORTH:	x = pos.x + s.getLength() - 1;	break;
+		case EAST:	y = pos.y - s.getLength() + 1;	break;
+		case SOUTH:	x = pos.x - s.getLength() + 1;	break;
+		case WEST:	y = pos.y + s.getLength() - 1;	break;
+		}
+		return !((x < 0 || x > 9) && (y < 0 || y > 9));
 	}
 	public boolean addShip(Ship s)
 	{
-		if (!validPos(pos))
+		if (!validPos(s))
 			return false;
 		ship = s;
-		this.status = 1;
-		for (int i = 0; i < s.getLength(); i++)
-		{
-			Grid.get(pos.x, pos.y - i).setImage(s.getBodyImage(i));;
-		}
-		//ImgFunc.setShipImage(img);
+		paintShip(s);
+		
 		return true;
+	}
+	private void paintShip(Ship s)
+	{
+		switch (s.getDirection())
+		{
+		case NORTH:
+			ImgFunc.setDirection(s, "north");
+			for (int i = 0; i < s.getLength(); i++)
+				Grid.get(pos.x + i, pos.y).setImage(s.getBodyImage(i));
+			break;
+		case EAST:
+			ImgFunc.setDirection(s, "east");
+			for (int i = 0; i < s.getLength(); i++)
+				Grid.get(pos.x, pos.y - i).setImage(s.getBodyImage(i));
+			break;
+		case SOUTH:
+			ImgFunc.setDirection(s, "south");
+			for (int i = 0; i < s.getLength(); i++)
+				Grid.get(pos.x - i, pos.y).setImage(s.getBodyImage(i));
+			break;
+		case WEST:
+			ImgFunc.setDirection(s, "west");
+			for (int i = 0; i < s.getLength(); i++)
+				Grid.get(pos.x, pos.y + i).setImage(s.getBodyImage(i));
+			break;
+		}
 	}
 	private void addListener()
 	{
@@ -86,11 +122,10 @@ public class Cell
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 					{
-						if (addShip(new Carrier(Direction.EAST, pos)))
+						if (addShip(new Carrier(Direction.WEST, pos)))
 							Battleship.setInfo("Ship set at " + pos);
 						else
 							Battleship.setInfo("Error adding ship at " + pos);
-						Battleship.setInfo("Ship set at " + pos);
 					}
 
 					@Override

@@ -9,19 +9,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 public class Battleship extends JFrame 
 {
 	static JPanel gamePanel;
-<<<<<<< HEAD
-=======
 	static JPanel opponentGamePanel;
-	static JPanel guiParent;
 	
->>>>>>> 207e30db6e93a02aae606ae7c60d7e14850b4093
 	static JLabel infoLabel;
+	static JLabel opponentInfoLabel;
+	
 	private static Grid grid;
+	private static Grid opponentGrid;
 	
 	public static void main(String args[])
 	{
@@ -30,35 +28,29 @@ public class Battleship extends JFrame
 	}
 	public Battleship()
 	{
-		JPanel gui = new JPanel(new GridLayout(1,2,5,5));
-		gui.setBorder(new EmptyBorder(5,5,5,5));
-		
 		gamePanel = new JPanel();
+		//opponentGamePanel = new JPanel();
+		
 		infoLabel = new JLabel("Game status");
+		//opponentInfoLabel = new JLabel("Opponent status");
+		
 		grid = new Grid();
+		//opponentGrid = new Grid();
 		
 		gamePanel.setLayout(new BorderLayout());
 				
 		gamePanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		grid.getPanel().setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		//opponentGrid.getPanel().setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
 		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
+		//gamePanel.add(opponentGrid.getPanel(), BorderLayout.EAST);
+		
 		gamePanel.add(infoLabel, BorderLayout.SOUTH);
 		Menu menu = new Menu();
 	    setJMenuBar(menu); // adds menu object to frame
-<<<<<<< HEAD
 		this.add(gamePanel);
 		this.setSize(500, 500);
-=======
-	    
-	    gui.add(opponentGamePanel);
-	    gui.add(gamePanel);
-	    
-	    this.add(gui); // add two panels side-by-side to the frame    
-	    
-		this.setSize(1000, 500);
-		
->>>>>>> 207e30db6e93a02aae606ae7c60d7e14850b4093
 		this.setTitle("Battleship");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
@@ -67,6 +59,5 @@ public class Battleship extends JFrame
 	public static void setInfo(String s)
 	{
 		infoLabel.setText(s);
-		opponentInfoLabel.setText(s);
 	}
 }

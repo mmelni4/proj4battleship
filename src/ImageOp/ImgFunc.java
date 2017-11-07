@@ -1,41 +1,25 @@
 package ImageOp;
 
-import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.Transparency;
-import java.awt.image.BufferedImage;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import Boat.Carrier;
+import Boat.Destroyer;
+import Boat.Gunship;
+import Boat.PatrolBoat;
 import Boat.Ship;
+import Boat.Submarine;
 
 public class ImgFunc 
 {
 	private static int IMGSIZE_X = 60;
 	private static int IMGSIZE_Y = 60;
-	public static JLabel getShipImage()
-	{
-		JLabel picLabel = null;
-		try
-		{
-		// Resize the image to fit into the JLabel
-		ImageIcon imageIcon = new ImageIcon("resources\\carrier\\bow.gif"); // load the image to a imageIcon
-		Image image = imageIcon.getImage(); // transform it 
-		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
-		imageIcon = new ImageIcon(newimg);  // transform it back
-		picLabel = new JLabel(imageIcon);
-		}
-		catch(Exception e)
-		{ 
-			JOptionPane.showMessageDialog(null, "Ship image not found");
-		}
-		return picLabel;
-	}
+	private static String direction = "east";
 	public static JLabel getCarrierImage(int segment)
 	{
 		JLabel picLabel = null;
@@ -46,19 +30,19 @@ public class ImgFunc
 		switch(segment)
 		{
 		case 0:
-			imageIcon = new ImageIcon("resources\\carrier\\bow.gif"); // load the image to a imageIcon
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
 			break;
 		case 1:
-			imageIcon = new ImageIcon("resources\\carrier\\body1.gif"); // load the image to a imageIcon
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body1.png");
 			break;
 		case 2:
-			imageIcon = new ImageIcon("resources\\carrier\\body2.gif"); // load the image to a imageIcon
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body2.png");
 			break;
 		case 3:
-			imageIcon = new ImageIcon("resources\\carrier\\body3.gif"); // load the image to a imageIcon
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body3.png");
 			break;
 		case 4:
-			imageIcon = new ImageIcon("resources\\carrier\\stern.gif"); // load the image to a imageIcon
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
 			break;
 		default:
 			imageIcon = null;
@@ -74,12 +58,250 @@ public class ImgFunc
 		}
 		return picLabel;
 	}
-	public static void setShipImage(JLabel picLabel)
+	public static void setCarrierImage(JLabel picLabel ,int segment)
 	{
+		ImageIcon imageIcon;
 		try
 		{
 		// Resize the image to fit into the JLabel
-		ImageIcon imageIcon = new ImageIcon("resources\\carrier\\bow.gif"); // load the image to a imageIcon
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body1.png");
+			break;
+		case 2:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body2.png");
+			break;
+		case 3:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body3.png");
+			break;
+		case 4:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
+			break;
+		default:
+			imageIcon = null;
+		}
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel.setIcon(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+	}
+	public static JLabel getGunshipImage(int segment)
+	{
+		JLabel picLabel = null;
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body2.png");
+			break;
+		case 2:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body3.png");
+			break;
+		case 3:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
+			break;
+		default:
+			imageIcon = null;
+		}
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel = new JLabel(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+		return picLabel;
+	}
+	public static void setGunshipImage(JLabel picLabel, int segment)
+	{
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body2.png");
+			break;
+		case 2:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body3.png");
+			break;
+		case 3:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
+			break;
+		default:
+			imageIcon = null;
+		}
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel.setIcon(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+	}
+	public static JLabel getSubmarineImage(int segment)
+	{
+		JLabel picLabel = null;
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body3.png");
+			break;
+		case 2:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
+			break;
+		default:
+			imageIcon = null;
+		}
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel = new JLabel(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+		return picLabel;
+	}
+	public static void setSubmarineImage(JLabel picLabel, int segment)
+	{
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body3.png");
+			break;
+		case 2:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
+			break;
+		default:
+			imageIcon = null;
+		}
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel.setIcon(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+	}
+	public static JLabel getDestroyerImage(int segment)
+	{
+		JLabel picLabel = null;
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body1.png");
+			break;
+		case 2:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
+			break;
+		default:
+			imageIcon = null;
+		}
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel = new JLabel(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+		return picLabel;
+	}
+	public static JLabel getPatrolBoatImage(int segment)
+	{
+		JLabel picLabel = null;
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
+			break;
+		default:
+			imageIcon = null;
+		}
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel = new JLabel(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+		return picLabel;
+	}
+	public static void setPatrolBoatImage(JLabel picLabel, int segment)
+	{
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
+			break;
+		default:
+			imageIcon = null;
+		}
 		Image image = imageIcon.getImage(); // transform it 
 		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
 		imageIcon = new ImageIcon(newimg);  // transform it back
@@ -126,19 +348,25 @@ public class ImgFunc
 		}
 		return picLabel;
 	}
-	public static BufferedImage rotate(BufferedImage image, double angle) 
+	public static void setDirection(Ship s, String dir) 
 	{
-	    double sin = Math.abs(Math.sin(angle)), cos = Math.abs(Math.cos(angle));
-	    int w = image.getWidth(), h = image.getHeight();
-	    int neww = (int)Math.floor(w*cos+h*sin), newh = (int) Math.floor(h * cos + w * sin);
-	    GraphicsConfiguration gc = getDefaultConfiguration();
-	    BufferedImage result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
-	    Graphics2D g = result.createGraphics();
-	    g.translate((neww - w) / 2, (newh - h) / 2);
-	    g.rotate(angle, w / 2, h / 2);
-	    g.drawRenderedImage(image, null);
-	    g.dispose();
-	    return result;
+	    direction = dir;
+	    
+	    if (s instanceof Carrier)
+    		for (int i = 0; i < s.getLength(); i++)
+    			setCarrierImage(s.getBodyImage(i), i);
+    	else if (s instanceof Gunship)
+    		for (int i = 0; i < s.getLength(); i++)
+    			setGunshipImage(s.getBodyImage(i), i);
+    	else if (s instanceof Submarine)
+    		for (int i = 0; i < s.getLength(); i++)
+    			setSubmarineImage(s.getBodyImage(i), i);
+    	else if (s instanceof Destroyer)
+    		for (int i = 0; i < s.getLength(); i++)
+    			setGunshipImage(s.getBodyImage(i), i);
+    	else if (s instanceof PatrolBoat)
+    		for (int i = 0; i < s.getLength(); i++)
+    			setPatrolBoatImage(s.getBodyImage(i), i);
 	}
 
 	private static GraphicsConfiguration getDefaultConfiguration() 
