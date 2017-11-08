@@ -17,6 +17,7 @@ public class Cell
 	JLabel img;
 	Ship ship;
 	int status;
+	//int id;
 	
 	public Cell()
 	{
@@ -26,6 +27,7 @@ public class Cell
 		status = 0;
 		addListener();
 	}
+	
 	public Cell(int x, int y)
 	{
 		pos = new Point(x, y);
@@ -33,6 +35,16 @@ public class Cell
 		ship = null;
 		addListener();
 	}
+
+	public Cell(int x, int y, int id)
+	{
+		
+		pos = new Point(x, y);
+		img = ImgFunc.getDefaultImage();
+		ship = null;
+		addOppListener();
+	}
+	
 	public JLabel getImage()
 	{
 		return img;
@@ -117,6 +129,57 @@ public class Cell
 						
 					}
 			
+				});
+	}
+	private void addOppListener()
+	{
+		img.addMouseListener(new MouseListener()
+				{
+					@Override
+					public void mouseClicked(MouseEvent arg0)
+					{
+						/*if(pos.status == 0)
+								{
+									pos.setStatus = 3;
+									pos.setImage(yellow);
+									Battleship.setOpponentInfo("Missed!");
+								}
+							else if(pos.status == 1)
+							{
+								pos.setStatus = 2; //status 2 = hit
+								//pos.getBodyImage(ship.getPosition());
+								int imageToSet = mapImage(pos.getBodyImage(ship.getPosition());
+								pos.setImage(imageToSet);
+								Battleship.setInfo("Hit at position: " + pos);
+							}
+							else if(pos.status == 2 || pos.status == 3)
+								Battleship.setOpponentInfo("Error adding ship at " + pos);												
+					*/}
+
+
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
 				});
 	}
 }
