@@ -5,8 +5,8 @@ import ImageOp.ImgFunc;
 import Logic.Point;
 public class Carrier extends Ship 
 {
-	static int len = 5;
-	JLabel body[];
+	final static int len = 5;
+	static JLabel body[];
 	public Carrier()
 	{
 		super();
@@ -23,6 +23,6 @@ public class Carrier extends Ship
 	}
 	public JLabel getBodyImage(int index)
 	{
-		return body[index];		
+		return body[index];
 	}
 }
