@@ -21,7 +21,7 @@ public class Battleship extends JFrame
 	static JLabel opponentLabel2;
 	
 	private static Grid grid;
-	private static Grid opponentGrid;
+	private static OpponentGrid opponentGrid;
 	
 	public static void main(String args[])
 	{
@@ -48,7 +48,7 @@ public class Battleship extends JFrame
 		opponentLabel = new JLabel("Your Opponent Status");
 		opponentPanel.add(opponentLabel, BorderLayout.NORTH);
 		opponentLabel2 = new JLabel("Updates for Opponent will be shown here");
-		opponentGrid = new Grid(1);
+		opponentGrid = new OpponentGrid();
 	    opponentPanel.add(opponentGrid.getOppPanel(), BorderLayout.CENTER);
 		opponentPanel.add(opponentLabel2, BorderLayout.SOUTH);
 				
@@ -73,13 +73,5 @@ public class Battleship extends JFrame
 	public static void setOpponentInfo(String s)
 	{
 		opponentLabel2.setText(s);
-	}
-	public static Grid getPlayerGrid()
-	{
-		return grid;
-	}
-	public static Grid getOpponentGrid()
-	{
-		return opponentGrid;
 	}
 }
