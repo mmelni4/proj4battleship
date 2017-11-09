@@ -1,7 +1,6 @@
 package UI;
 
 import java.awt.BorderLayout;
-import java.awt.ComponentOrientation;
 import java.awt.GridLayout;
 
 import javax.swing.Icon;
@@ -14,10 +13,8 @@ import javax.swing.border.EmptyBorder;
 public class Battleship extends JFrame 
 {
 	static JPanel gamePanel;
-
 	static JPanel opponentPanel;
-	static JPanel container;
-	
+	static JPanel container;	
 	static JLabel infoLabel;
 	static JLabel opponentLabel;
 	static JLabel infoLabel2;
@@ -33,36 +30,29 @@ public class Battleship extends JFrame
 	}
 	public Battleship()
 	{
-		container = new JPanel();
-		gamePanel = new JPanel();
-		opponentPanel = new JPanel();
-		
+		container = new JPanel();		
 		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
 		container.setBorder(new EmptyBorder(10,10,10,10));
+		
+		gamePanel = new JPanel();
 		gamePanel.setLayout(new BorderLayout());
-
-		opponentPanel.setLayout(new BorderLayout());
-		
 		infoLabel = new JLabel("Your Game Status");
-		opponentLabel = new JLabel("Your Opponent Status");
-		
-		infoLabel2 = new JLabel("Updates will be shown here");
-		opponentLabel2 = new JLabel("Updates will be shown here");
-		
 		gamePanel.add(infoLabel, BorderLayout.NORTH);
-		opponentPanel.add(opponentLabel, BorderLayout.NORTH);
-		
+		infoLabel2 = new JLabel("Updates will be shown here");
 		grid = new Grid();
 		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
-
 		gamePanel.add(infoLabel2, BorderLayout.SOUTH);
-		container.add(gamePanel);
-		//gamePanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		//grid.getPanel().setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
+		opponentPanel = new JPanel();
+		opponentPanel.setLayout(new BorderLayout());
+		opponentLabel = new JLabel("Your Opponent Status");
+		opponentPanel.add(opponentLabel, BorderLayout.NORTH);
+		opponentLabel2 = new JLabel("Updates for Opponent will be shown here");
 		opponentGrid = new Grid(1);
-	    opponentPanel.add(opponentGrid.getPanel(), BorderLayout.CENTER);
+	    opponentPanel.add(opponentGrid.getOppPanel(), BorderLayout.CENTER);
 		opponentPanel.add(opponentLabel2, BorderLayout.SOUTH);
+				
+		container.add(gamePanel);
 		container.add(opponentPanel);
 		
 		Menu menu = new Menu();
@@ -83,5 +73,13 @@ public class Battleship extends JFrame
 	public static void setOpponentInfo(String s)
 	{
 		opponentLabel2.setText(s);
+	}
+	public static Grid getPlayerGrid()
+	{
+		return grid;
+	}
+	public static Grid getOpponentGrid()
+	{
+		return opponentGrid;
 	}
 }

@@ -36,7 +36,7 @@ public class Grid
 		for (int i = 0; i < 10; i++)
 			for (int j = 0; j < 10; j++)
 			{
-				grid[i][j] = new Cell(i, j);
+				grid[i][j] = new Cell(i, j, 0);
 				if (grid[i][j].getImage() == null)
 					return;
 				
@@ -58,7 +58,12 @@ public class Grid
 		return gridPanel;
 	}
 	
-	public void setStatus(int x, int y, int status)
+	public JPanel getOppPanel()
+	{
+		return gridPanel;
+	}
+	
+	public void setStatus(int x, int y, Status status)
 	{
 		grid[x][y].setStatus(status);
 	}
@@ -71,8 +76,7 @@ public class Grid
 		{
 			for (int j = 0; j < 10; j++)
 			{
-				gridPanel.add(grid[i][j].getImage());
-				
+				gridPanel.add(grid[i][j].getImage());				
 			}
 		}
 	}

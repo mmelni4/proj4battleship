@@ -20,16 +20,23 @@ public class Cell
 	Point pos;
 	JLabel img;
 	Ship ship;
-	int status;
-	//int id;
+	Status status;
 	
 	public Cell()
 	{
 		pos = new Point(0, 0);
 		img = ImgFunc.getDefaultImage();
 		ship = null;
-		status = 0;
+		status = status.EMPTY;
 		addListener();
+	}
+	public Cell(int id)
+	{
+		pos = new Point(0, 0);
+		img = ImgFunc.getDefaultImage();
+		ship = null;
+		status = status.EMPTY;
+		addOppListener();
 	}
 	
 	public Cell(int x, int y)
@@ -37,6 +44,7 @@ public class Cell
 		pos = new Point(x, y);
 		img = ImgFunc.getDefaultImage();
 		ship = null;
+		status = status.UNTOUCHED;
 		addListener();
 	}
 
@@ -46,6 +54,7 @@ public class Cell
 		pos = new Point(x, y);
 		img = ImgFunc.getDefaultImage();
 		ship = null;
+		status = status.UNTOUCHED;
 		addOppListener();
 	}
 	
@@ -63,19 +72,19 @@ public class Cell
 	}
 	
 	//set Status of current situation in cell
-	// 0 = empty by default
-	// 1 = untouched
-	// 2 = hit
-	// 3 = miss
-	public void setStatus(int status)
+	// EMPTY = empty by default
+	// UNTOUCHED = ship is set but never accessed
+	// HIT
+	// MISS
+	public void setStatus(Status status)
 	{
 		this.status = status;
 	}
 	
 	//get the Status of this cell
-	public int getStatus()
+	public Status getStatus()
 	{
-		return status;
+		return this.status;
 	}
 	
 	public boolean validPos(Ship s)
