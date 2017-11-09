@@ -188,46 +188,39 @@ public class Cell
 	private void addListener()
 	{
 		img.addMouseListener(new MouseListener()
-				{
-					@Override
-					public void mouseClicked(MouseEvent arg0)
-					{
-						if (addShip(getShip(Ribbon.shiptype)))
-							Battleship.setInfo("Ship set at " + pos);
-						else
-							Battleship.setInfo("Error adding ship at " + pos);
-					}
-
-					@Override
-					public void mouseEntered(MouseEvent arg0) {
-						if (addShip(getShip(Ribbon.shiptype)))
-							Battleship.setInfo("Ship set at " + pos);
-						else
-							Battleship.setInfo("Error adding ship at " + pos);
-						
-					}
-
-					@Override
-					public void mouseExited(MouseEvent arg0) {
-						if (removeShip())
-							Battleship.setInfo("Ship set at " + pos);
-						else
-							Battleship.setInfo("Error removing ship at " + pos);
-						
-					}
-
-					@Override
-					public void mousePressed(MouseEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void mouseReleased(MouseEvent arg0) {
-						// TODO Auto-generated method stub
-						
-					}
-			
-				});
+		{
+			@Override
+			public void mouseClicked(MouseEvent arg0)
+			{
+				Ribbon.selectMode = false;	// Invert select mode
+				if (ship == null) // Don't do anything if I clicked a blank cell
+					return;
+				else
+					Ribbon.addShip(ship); // Add ship to used ship list to keep it from being removed
+			}
+				@Override
+			public void mouseEntered(MouseEvent arg0) 
+			{
+				if (Ribbon.selectMode && !Ribbon.shipUsed(ship)) // Am I in select mode, and is there a placed ship here?
+					if (addShip(getShip(Ribbon.shiptype)))
+						Battleship.setInfo("Ship set at " + pos);
+					else
+						Battleship.setInfo("Error adding ship at " + pos);	
+			}
+				@Override
+			public void mouseExited(MouseEvent arg0) 
+			{
+				if (Ribbon.selectMode && !Ribbon.shipUsed(ship)) // Am I in select mode, and is there a placed ship here?
+					if (removeShip())
+						Battleship.setInfo("Ship set at " + pos);
+					else
+						Battleship.setInfo("Error removing ship at " + pos);
+			}
+				@Override
+			public void mousePressed(MouseEvent arg0) {}
+				@Override
+			public void mouseReleased(MouseEvent arg0) {}
+	
+		});
 	}
 }
