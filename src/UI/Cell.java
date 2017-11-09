@@ -11,6 +11,7 @@ import Boat.Direction;
 import Boat.Gunship;
 import Boat.PatrolBoat;
 import Boat.Ship;
+import Boat.Shiptype;
 import Boat.Submarine;
 import ImageOp.ImgFunc;
 import Logic.Point;
@@ -85,35 +86,104 @@ public class Cell
 		if (!validPos(s))
 			return false;
 		ship = s;
-		paintShip(s);
+		paintShip();
 		
 		return true;
 	}
-	private void paintShip(Ship s)
+	public boolean removeShip()
 	{
-		switch (s.getDirection())
+		if (ship == null)
+			return false;
+		unpaintShip();
+		ship = null;
+		
+		return true;
+	}
+	private void paintShip()
+	{
+		switch (ship.getDirection())
 		{
 		case NORTH:
-			ImgFunc.setDirection(s, "north");
-			for (int i = 0; i < s.getLength(); i++)
-				Grid.get(pos.x + i, pos.y).setImage(s.getBodyImage(i));
+			ImgFunc.setDirection(ship, "north");
+			for (int i = 0; i < ship.getLength(); i++)
+				Grid.get(pos.x + i, pos.y).setImage(ship.getBodyImage(i));
 			break;
 		case EAST:
-			ImgFunc.setDirection(s, "east");
-			for (int i = 0; i < s.getLength(); i++)
-				Grid.get(pos.x, pos.y - i).setImage(s.getBodyImage(i));
+			ImgFunc.setDirection(ship, "east");
+			for (int i = 0; i < ship.getLength(); i++)
+				Grid.get(pos.x, pos.y - i).setImage(ship.getBodyImage(i));
 			break;
 		case SOUTH:
-			ImgFunc.setDirection(s, "south");
-			for (int i = 0; i < s.getLength(); i++)
-				Grid.get(pos.x - i, pos.y).setImage(s.getBodyImage(i));
+			ImgFunc.setDirection(ship, "south");
+			for (int i = 0; i < ship.getLength(); i++)
+				Grid.get(pos.x - i, pos.y).setImage(ship.getBodyImage(i));
 			break;
 		case WEST:
-			ImgFunc.setDirection(s, "west");
-			for (int i = 0; i < s.getLength(); i++)
-				Grid.get(pos.x, pos.y + i).setImage(s.getBodyImage(i));
+			ImgFunc.setDirection(ship, "west");
+			for (int i = 0; i < ship.getLength(); i++)
+				Grid.get(pos.x, pos.y + i).setImage(ship.getBodyImage(i));
 			break;
 		}
+	}
+	private void unpaintShip()
+	{
+		switch (ship.getDirection())
+		{
+		case NORTH:
+			ImgFunc.setDirection(ship, "north");
+			for (int i = 0; i < ship.getLength(); i++)
+				Grid.get(pos.x + i, pos.y).setImage(ImgFunc.getDefaultImage());
+			break;
+		case EAST:
+			ImgFunc.setDirection(ship, "east");
+			for (int i = 0; i < ship.getLength(); i++)
+				Grid.get(pos.x, pos.y - i).setImage(ImgFunc.getDefaultImage());
+			break;
+		case SOUTH:
+			ImgFunc.setDirection(ship, "south");
+			for (int i = 0; i < ship.getLength(); i++)
+				Grid.get(pos.x - i, pos.y).setImage(ImgFunc.getDefaultImage());
+			break;
+		case WEST:
+			ImgFunc.setDirection(ship, "west");
+			for (int i = 0; i < ship.getLength(); i++)
+				Grid.get(pos.x, pos.y + i).setImage(ImgFunc.getDefaultImage());
+			break;
+		}
+		ship = null;
+	}
+	private Ship getShip(Shiptype s)
+	{
+		Ship boat = null;
+		switch(s)
+		{
+		case CARRIER:
+		{
+			boat = new Carrier(Ribbon.direction, pos);
+			break;
+		}
+		case GUNSHIP:
+		{
+			boat = new Gunship(Ribbon.direction, pos);
+			break;
+		}
+		case SUBMARINE:
+		{
+			boat = new Submarine(Ribbon.direction, pos);
+			break;
+		}
+		case DESTROYER:
+		{
+			boat = new Destroyer(Ribbon.direction, pos);
+			break;
+		}
+		case PATROLBOAT:
+		{
+			boat = new PatrolBoat(Ribbon.direction, pos);
+			break;
+		}
+		}
+		return boat;
 	}
 	private void addListener()
 	{
@@ -122,7 +192,7 @@ public class Cell
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 					{
-						if (addShip(new Carrier(Direction.WEST, pos)))
+						if (addShip(getShip(Ribbon.shiptype)))
 							Battleship.setInfo("Ship set at " + pos);
 						else
 							Battleship.setInfo("Error adding ship at " + pos);
@@ -130,13 +200,19 @@ public class Cell
 
 					@Override
 					public void mouseEntered(MouseEvent arg0) {
-						// TODO Auto-generated method stub
+						if (addShip(getShip(Ribbon.shiptype)))
+							Battleship.setInfo("Ship set at " + pos);
+						else
+							Battleship.setInfo("Error adding ship at " + pos);
 						
 					}
 
 					@Override
 					public void mouseExited(MouseEvent arg0) {
-						// TODO Auto-generated method stub
+						if (removeShip())
+							Battleship.setInfo("Ship set at " + pos);
+						else
+							Battleship.setInfo("Error removing ship at " + pos);
 						
 					}
 
