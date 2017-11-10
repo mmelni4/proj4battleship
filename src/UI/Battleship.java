@@ -2,6 +2,7 @@ package UI;
 
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 
@@ -11,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 
 public class Battleship extends JFrame 
 {
@@ -22,10 +24,9 @@ public class Battleship extends JFrame
 	static JLabel infoLabel;
 	static JLabel opponentLabel;
 	static JLabel infoLabel2;
-	static JLabel opponentLabel2;
-	
+	static JLabel opponentLabel2;	
 	static JLabel opponentInfoLabel;
-	
+	private FlowLayout layout;
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
 	
@@ -37,20 +38,20 @@ public class Battleship extends JFrame
 	public Battleship()
 	{
 		panel = new JPanel();
-		
 		ribbon = new Ribbon();
 		container = new JPanel();		
 		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
-		container.setBorder(new EmptyBorder(10,10,10,10));
+		layout = new FlowLayout();
+	    container.setLayout( layout );
+		//container.setBorder(new EmptyBorder(10,10,10,10));
 		
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new BorderLayout());
 		infoLabel = new JLabel("Your Game Status");
-		gamePanel.add(infoLabel, BorderLayout.NORTH);
+		
 		infoLabel2 = new JLabel("Updates will be shown here");
 		grid = new Grid();
 		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
-		gamePanel.add(infoLabel2, BorderLayout.SOUTH);
 		
 		panel.setLayout(new BorderLayout());
 		
@@ -68,7 +69,8 @@ public class Battleship extends JFrame
 		gamePanel.add(grid.getPanel(), BorderLayout.NORTH);
 		
 		gamePanel.add(ribbon.getPanel());
-		gamePanel.add(infoLabel, BorderLayout.SOUTH);
+		panel.add(infoLabel, BorderLayout.NORTH);
+		panel.add(infoLabel2, BorderLayout.SOUTH);
 		panel.add(gamePanel, BorderLayout.CENTER);
 		panel.add(ribbon.getPanel(), BorderLayout.EAST);
 		container.add(panel);
