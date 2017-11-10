@@ -7,12 +7,16 @@ import java.io.*;
 
 public class Server 
 { 
- public static void main(String[] args) throws IOException 
+	public Server()
+	{
+		
+	}
+ public static void initiateServer() 
    { 
     ServerSocket connectionSocket = null; 
 
     try { 
-         connectionSocket = new ServerSocket(10007); 
+         connectionSocket = new ServerSocket(6789); 
          System.out.println ("Socket open on Port: " +
                              connectionSocket.getLocalPort());
          InetAddress addr = InetAddress.getLocalHost();
@@ -22,7 +26,7 @@ public class Server
         } 
     catch (IOException e) 
         { 
-         System.err.println("Could not listen on port: 10007."); 
+         System.err.println("Could not listen on port: 6789."); 
          System.exit(1); 
         } 
 
@@ -37,6 +41,8 @@ public class Server
          System.exit(1); 
         } 
 
+   try {
+	   
     PrintWriter out = new PrintWriter(communicationSocket.getOutputStream(), 
                                       true); 
     BufferedReader in = new BufferedReader( 
@@ -57,5 +63,11 @@ public class Server
     in.close(); 
     communicationSocket.close(); 
     connectionSocket.close(); 
+   }
+   catch (IOException e)
+   {
+	   System.err.println("Accept failed."); 
+       System.exit(1); 
+   }
    } 
 } 
