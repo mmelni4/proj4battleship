@@ -1,6 +1,7 @@
 package UI;
 
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -49,12 +50,12 @@ public class Ribbon
         rPanel.setLayout(layout);
         rPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         
-        rotateButton    = new JButton("Rotate"     );
-        carrierButton   = new JButton("Carrier"    );
-        gunshipButton   = new JButton("Gunship"    );
-        subButton       = new JButton("Submarine"  );
-        destroyerButton = new JButton("Destroyer"  );
-        patrolButton    = new JButton("Patrol Boat");
+        rotateButton    = new JButton("Rotate"     ); setSize(rotateButton   );
+        carrierButton   = new JButton("Carrier"    ); setSize(carrierButton  );
+        gunshipButton   = new JButton("Gunship"    ); setSize(gunshipButton  );
+        subButton       = new JButton("Submarine"  ); setSize(subButton      );
+        destroyerButton = new JButton("Destroyer"  ); setSize(destroyerButton);
+        patrolButton    = new JButton("Patrol Boat"); setSize(patrolButton   );
         selectedButton  = null;
         
         addListener();
@@ -74,6 +75,10 @@ public class Ribbon
         rPanel.add(destroyerButton);
         rPanel.add(patrolButton   );
         
+    }
+    private void setSize(JButton j)
+    {
+    	//j.setPreferredSize(new Dimension(450, 10));
     }
     public JPanel getPanel()
     {

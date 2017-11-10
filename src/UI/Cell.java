@@ -21,15 +21,23 @@ public class Cell
 	Point pos;
 	JLabel img;
 	Ship ship;
-	int status;
+	Status status;
 	
 	public Cell()
 	{
 		pos = new Point(0, 0);
 		img = ImgFunc.getDefaultImage();
 		ship = null;
-		status = 0;
+		status = Status.EMPTY;
 		addListener();
+	}
+	public Cell(int id)
+	{
+		pos = new Point(0, 0);
+		img = ImgFunc.getDefaultImage();
+		ship = null;
+		status = Status.EMPTY;
+		addOppListener();
 	}
 	public Cell(int x, int y)
 	{
@@ -37,6 +45,15 @@ public class Cell
 		img = ImgFunc.getDefaultImage();
 		ship = null;
 		addListener();
+	}
+	public Cell(int x, int y, int id)
+	{
+		
+		pos = new Point(x, y);
+		img = ImgFunc.getDefaultImage();
+		ship = null;
+		status = status.UNTOUCHED;
+		addOppListener();
 	}
 	public JLabel getImage()
 	{
@@ -56,22 +73,25 @@ public class Cell
 	// 1 = untouched
 	// 2 = hit
 	// 3 = miss
-	public void setStatus(int status)
+	public void setStatus(Status status)
 	{
 		this.status = status;
 	}
 	
 	//get the Status of this cell
-	public int getStatus()
+	public Status getStatus()
 	{
 		return status;
 	}
-	
+	// A valid position is one where:
+	//	I am within the grid limits &&
+	//	I am not touching other ships
 	public boolean validPos(Ship s)
 	{
 		Direction d = s.getDirection();
 		int x = -1;
 		int y = -1;
+		// Am I within the grid limits?
 		switch(d)
 		{
 		case NORTH:	x = pos.x + s.getLength() - 1;	break;
@@ -82,7 +102,7 @@ public class Cell
 		
 		if ((x < 0 || x > 9) && (y < 0 || y > 9))
 			return false;
-		
+		// Am I touching any other ships?
 		switch(d)
 		{
 			case NORTH:	
@@ -108,6 +128,9 @@ public class Cell
 		}
 		return true;
 	}
+	// I can only add a ship if:
+	//	It is a valid position to put it there
+	// Otherwise, Cell's current ship is now the new ship, and paint it.
 	public boolean addShip(Ship s)
 	{
 		if (!validPos(s))
@@ -254,5 +277,56 @@ public class Cell
 			public void mouseReleased(MouseEvent arg0) {}
 	
 		});
+	}
+	private void addOppListener()
+	{
+		img.addMouseListener(new MouseListener()
+				{
+					@Override
+					public void mouseClicked(MouseEvent arg0)
+					{
+						/*if(pos.status == 0)
+								{
+									pos.setStatus = 3;
+									pos.setImage(yellow);
+									Battleship.setOpponentInfo("Missed!");
+								}
+							else if(pos.status == 1)
+							{
+								pos.setStatus = 2; //status 2 = hit
+								//pos.getBodyImage(ship.getPosition());
+								int imageToSet = mapImage(pos.getBodyImage(ship.getPosition());
+								pos.setImage(imageToSet);
+								Battleship.setInfo("Hit at position: " + pos);
+							}
+							else if(pos.status == 2 || pos.status == 3)
+								Battleship.setOpponentInfo("Error adding ship at " + pos);												
+					*/}
+
+
+					@Override
+					public void mouseEntered(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
 	}
 }

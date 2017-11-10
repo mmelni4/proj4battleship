@@ -4,28 +4,27 @@ import java.io.*;
 import java.net.*;
 
 public class Client {
-    public static void main(String[] args) throws IOException {
+    public static void initiateClient() throws IOException {
 
         Socket echoSocket = null;
-        PrintWriter out = null;
-        BufferedReader in = null;
+        ObjectOutputStream out = null;
+        ObjectInputStream in = null;
 
         try {
-            echoSocket = new Socket("127.0.0.1", 10007);
-            out = new PrintWriter(echoSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(
-                                        echoSocket.getInputStream()));
+            echoSocket = new Socket("127.0.0.1", 6789);
+            out = new ObjectOutputStream(echoSocket.getOutputStream());
+            in = new ObjectInputStream(echoSocket.getInputStream());
+            
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host: taranis.");
+            System.err.println("Error opening socket");
             System.exit(1);
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for "
-                               + "the connection to: taranis.");
+                               + "the connection to socket");
             System.exit(1);
         }
 
-	BufferedReader stdIn = new BufferedReader(
-                                   new InputStreamReader(System.in));
+	BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 	String userInput;
 
 	while ((userInput = stdIn.readLine()) != null) {

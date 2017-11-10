@@ -2,6 +2,7 @@ package UI;
 
 import java.awt.BorderLayout;
 import java.awt.ComponentOrientation;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 
@@ -10,19 +11,24 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
 
 public class Battleship extends JFrame 
 {
 	static Ribbon ribbon;
 	static JPanel panel;
 	static JPanel gamePanel;
-	static JPanel opponentGamePanel;
-	
+	static JPanel opponentPanel;
+	static JPanel container;	
 	static JLabel infoLabel;
+	static JLabel opponentLabel;
+	static JLabel infoLabel2;
+	static JLabel opponentLabel2;	
 	static JLabel opponentInfoLabel;
-	
+	private FlowLayout layout;
 	private static Grid grid;
-	private static Grid opponentGrid;
+	private static OpponentGrid opponentGrid;
 	
 	public static void main(String args[])
 	{
@@ -33,40 +39,56 @@ public class Battleship extends JFrame
 	{
 		panel = new JPanel();
 		ribbon = new Ribbon();
+		container = new JPanel();		
+		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
+		layout = new FlowLayout();
+	    container.setLayout( layout );
+		//container.setBorder(new EmptyBorder(10,10,10,10));
+		
 		gamePanel = new JPanel();
-		//opponentGamePanel = new JPanel();
+		gamePanel.setLayout(new BorderLayout());
+		infoLabel = new JLabel("Your Game Status");
 		
-		infoLabel = new JLabel("Game status");
-		//opponentInfoLabel = new JLabel("Opponent status");
-		
+		infoLabel2 = new JLabel("Updates will be shown here");
 		grid = new Grid();
-		//opponentGrid = new Grid();
+		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
 		
 		panel.setLayout(new BorderLayout());
 		
 		gamePanel.setLayout(new BorderLayout());
 				
-		//gamePanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		//grid.getPanel().setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		//opponentGrid.getPanel().setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		opponentPanel = new JPanel();
+		opponentPanel.setLayout(new BorderLayout());
+		opponentLabel = new JLabel("Your Opponent Status");
+		opponentPanel.add(opponentLabel, BorderLayout.NORTH);
+		opponentLabel2 = new JLabel("Updates for Opponent will be shown here");
+		opponentGrid = new OpponentGrid();
+	    opponentPanel.add(opponentGrid.getOppPanel(), BorderLayout.CENTER);
+		opponentPanel.add(opponentLabel2, BorderLayout.SOUTH);
 		
 		gamePanel.add(grid.getPanel(), BorderLayout.NORTH);
-		//gamePanel.add(opponentGrid.getPanel(), BorderLayout.EAST);
 		
 		gamePanel.add(ribbon.getPanel());
-		gamePanel.add(infoLabel, BorderLayout.SOUTH);
+		panel.add(infoLabel, BorderLayout.NORTH);
+		panel.add(infoLabel2, BorderLayout.SOUTH);
 		panel.add(gamePanel, BorderLayout.CENTER);
 		panel.add(ribbon.getPanel(), BorderLayout.EAST);
+		container.add(panel);
+		container.add(opponentPanel);
 		Menu menu = new Menu();
 	    setJMenuBar(menu); // adds menu object to frame
-		this.add(panel);
-		this.setSize(525, 500);
+		this.add(container);
+		this.setSize(1025, 525);
 		this.setTitle("Battleship");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
 	public static void setInfo(String s)
 	{
-		infoLabel.setText(s);
+		infoLabel2.setText(s);
+	}
+	public static void setOpponentInfo(String s)
+	{
+		opponentLabel2.setText(s);
 	}
 }

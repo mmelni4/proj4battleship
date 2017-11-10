@@ -3,12 +3,12 @@ package UI;
 import java.awt.GridLayout;
 import javax.swing.JPanel;
 
-public class Grid
+public class OpponentGrid
 {
 	private static Cell grid[][];
 	private static JPanel gridPanel;
 	
-	public Grid()
+	public OpponentGrid()
 	{
 		gridPanel = new JPanel();
 		gridPanel.setLayout(new GridLayout(10,10,1,1));
@@ -16,14 +16,15 @@ public class Grid
 		for (int i = 0; i < 10; i++)
 			for (int j = 0; j < 10; j++)
 			{
-				grid[i][j] = new Cell(i, j);
+				grid[i][j] = new Cell(i, j, 0);
 				if (grid[i][j].getImage() == null)
 					return;
 				
 				gridPanel.add(grid[i][j].getImage());
 			}
-		Battleship.setInfo("Board setup complete");
+		Battleship.setOpponentInfo("Opponent Board setup complete");
 	}
+	
 	public static Cell get(int x, int y)
 	{
 		if (x < 0 || x > 9 
@@ -32,7 +33,8 @@ public class Grid
 		else
 			return grid[x][y];
 	}
-	public JPanel getPanel()
+	
+	public JPanel getOppPanel()
 	{
 		return gridPanel;
 	}
@@ -50,8 +52,7 @@ public class Grid
 		{
 			for (int j = 0; j < 10; j++)
 			{
-				gridPanel.add(grid[i][j].getImage());
-				
+				gridPanel.add(grid[i][j].getImage());				
 			}
 		}
 	}

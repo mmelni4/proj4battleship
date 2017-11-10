@@ -10,6 +10,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
+import Connection.Server;
+
 /******************************************************************
  *                                                                *
  * Menu class contains JMenu Items with short descriptions        *
@@ -47,7 +49,17 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 			});
 			submenu.add(menuItem);
 		menu.add(submenu);
-			menuItem = new JMenuItem("Establish Connection"); 			
+			menuItem = new JMenuItem("Establish Connection"); 
+			menuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try {
+						Server.initiateServer();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
 			menu.add(menuItem);
 			menuItem = new JMenuItem("View Statistics");
 			menu.add(menuItem);
@@ -57,7 +69,7 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 					JOptionPane.showMessageDialog(menu, 
 							"Authors:"
 							+ "\n1.Mariia Melnikova (mmelni4)"
-							+ "\n2.Michael Wilkie (mwilkie2)");
+							+ "\n2.Michael Wilkie (mwilki7)");
 				}
 			});
 			menu.add(menuItem);	
