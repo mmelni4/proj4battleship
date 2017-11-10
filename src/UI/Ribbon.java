@@ -19,6 +19,7 @@ import Boat.PatrolBoat;
 import Boat.Ship;
 import Boat.Shiptype;
 import Boat.Submarine;
+import java.awt.FlowLayout;
 
 public class Ribbon 
 {
@@ -46,16 +47,19 @@ public class Ribbon
         direction = Direction.EAST;
         rPanel = new JPanel();
         layout = new BoxLayout(rPanel,BoxLayout.Y_AXIS);
-        
+        //layout = new FlowLayout(FlowLayout.LEFT);
         rPanel.setLayout(layout);
+        rPanel.setPreferredSize(new Dimension(100, 25));
+        rPanel.setMinimumSize(new Dimension(100, 25));
+        rPanel.setMaximumSize(new Dimension(100, 25));
         rPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         
-        rotateButton    = new JButton("Rotate"     ); setSize(rotateButton   );
-        carrierButton   = new JButton("Carrier"    ); setSize(carrierButton  );
-        gunshipButton   = new JButton("Gunship"    ); setSize(gunshipButton  );
-        subButton       = new JButton("Submarine"  ); setSize(subButton      );
-        destroyerButton = new JButton("Destroyer"  ); setSize(destroyerButton);
-        patrolButton    = new JButton("Patrol Boat"); setSize(patrolButton   );
+        rotateButton    = new JButton("Rotate         "); setSize(rotateButton   );
+        carrierButton   = new JButton("Carrier        "    ); setSize(carrierButton  );
+        gunshipButton   = new JButton("Gunship      "    ); setSize(gunshipButton  );
+        subButton       = new JButton("Submarine "  ); setSize(subButton      );
+        destroyerButton = new JButton("Destroyer   "  ); setSize(destroyerButton);
+        patrolButton    = new JButton("Patrol Boat "); setSize(patrolButton   );
         selectedButton  = null;
         
         addListener();

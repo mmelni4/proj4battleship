@@ -43,7 +43,7 @@ public class Battleship extends JFrame
 		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
 		layout = new FlowLayout();
 	    container.setLayout( layout );
-		//container.setBorder(new EmptyBorder(10,10,10,10));
+		container.setBorder(new EmptyBorder(10,10,10,10));
 		
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new BorderLayout());
