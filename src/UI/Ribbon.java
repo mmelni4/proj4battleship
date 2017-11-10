@@ -30,6 +30,8 @@ public class Ribbon
     private JButton   destroyerButton;
     private JButton   patrolButton;
     
+    private static JButton   selectedButton;
+    
     private static ArrayList<Ship> shiplist;
     private ActionListener boatListener;
     public static Shiptype shiptype;
@@ -53,6 +55,7 @@ public class Ribbon
         subButton       = new JButton("Submarine"  );
         destroyerButton = new JButton("Destroyer"  );
         patrolButton    = new JButton("Patrol Boat");
+        selectedButton  = null;
         
         addListener();
         
@@ -86,6 +89,7 @@ public class Ribbon
             	selectMode = true;
                 // Set type of ship to create when placing them on the board
                 JButton ship = (JButton) e.getSource();
+                selectedButton = ship;
                 if (ship.getText().equals("Carrier"        )) shiptype = Shiptype.CARRIER   ;
                 else if(ship.getText().equals("Gunship"    )) shiptype = Shiptype.GUNSHIP   ;
                 else if(ship.getText().equals("Submarine"  )) shiptype = Shiptype.SUBMARINE ;
@@ -106,6 +110,10 @@ public class Ribbon
             }
             
         });
+    }
+    public static void disableSelected()
+    {
+    	selectedButton.setEnabled(false);
     }
     public static void addShip(Ship s)
     {

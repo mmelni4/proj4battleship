@@ -75,11 +75,38 @@ public class Cell
 		switch(d)
 		{
 		case NORTH:	x = pos.x + s.getLength() - 1;	break;
-		case EAST:	y = pos.y - s.getLength() + 1;	break;
+		case EAST :	y = pos.y - s.getLength() + 1;	break;
 		case SOUTH:	x = pos.x - s.getLength() + 1;	break;
-		case WEST:	y = pos.y + s.getLength() - 1;	break;
+		case WEST :	y = pos.y + s.getLength() - 1;	break;
 		}
-		return !((x < 0 || x > 9) && (y < 0 || y > 9));
+		
+		if ((x < 0 || x > 9) && (y < 0 || y > 9))
+			return false;
+		
+		switch(d)
+		{
+			case NORTH:	
+				for (int i = 0; i < s.getLength(); i++) 
+					if (Ribbon.shipUsed(Grid.get(pos.x + i, pos.y).ship))
+						return false;
+				break;
+			case EAST :	
+				for (int i = 0; i < s.getLength(); i++)
+					if (Ribbon.shipUsed(Grid.get(pos.x, pos.y - i).ship))
+						return false;
+				break;
+			case SOUTH:	
+				for (int i = 0; i < s.getLength(); i++) 
+					if (Ribbon.shipUsed(Grid.get(pos.x - i, pos.y).ship))
+						return false;
+				break;
+			case WEST :	
+				for (int i = 0; i < s.getLength(); i++)
+					if (Ribbon.shipUsed(Grid.get(pos.x, pos.y + i).ship))
+						return false;
+				break;
+		}
+		return true;
 	}
 	public boolean addShip(Ship s)
 	{
@@ -94,6 +121,8 @@ public class Cell
 	{
 		if (ship == null)
 			return false;
+		if (Ribbon.shipUsed(ship))
+			return false;
 		unpaintShip();
 		ship = null;
 		
@@ -101,87 +130,84 @@ public class Cell
 	}
 	private void paintShip()
 	{
+		Cell c; // use this to save a few memory references, and make code easier to read
 		switch (ship.getDirection())
 		{
 		case NORTH:
 			ImgFunc.setDirection(ship, "north");
 			for (int i = 0; i < ship.getLength(); i++)
-				Grid.get(pos.x + i, pos.y).setImage(ship.getBodyImage(i));
+			{
+				c = Grid.get(pos.x + i, pos.y);
+				c.setImage(ship.getBodyImage(i));
+				c.ship = ship;
+			}
 			break;
 		case EAST:
 			ImgFunc.setDirection(ship, "east");
 			for (int i = 0; i < ship.getLength(); i++)
-				Grid.get(pos.x, pos.y - i).setImage(ship.getBodyImage(i));
+			{
+				c = Grid.get(pos.x, pos.y - i);
+				c.setImage(ship.getBodyImage(i));
+				c.ship = ship;
+			}
 			break;
 		case SOUTH:
 			ImgFunc.setDirection(ship, "south");
 			for (int i = 0; i < ship.getLength(); i++)
-				Grid.get(pos.x - i, pos.y).setImage(ship.getBodyImage(i));
+			{
+				c = Grid.get(pos.x - i, pos.y);
+				c.setImage(ship.getBodyImage(i));
+				c.ship = ship;
+			}
 			break;
 		case WEST:
 			ImgFunc.setDirection(ship, "west");
 			for (int i = 0; i < ship.getLength(); i++)
-				Grid.get(pos.x, pos.y + i).setImage(ship.getBodyImage(i));
+			{
+				c = Grid.get(pos.x, pos.y + i);
+				c.setImage(ship.getBodyImage(i));
+				c.ship = ship;
+			}
 			break;
 		}
 	}
 	private void unpaintShip()
 	{
+		Point position = ship.getPosition();
 		switch (ship.getDirection())
 		{
 		case NORTH:
 			ImgFunc.setDirection(ship, "north");
 			for (int i = 0; i < ship.getLength(); i++)
-				Grid.get(pos.x + i, pos.y).setImage(ImgFunc.getDefaultImage());
+				Grid.get(position.x + i, position.y).setImage(ImgFunc.getDefaultImage());
 			break;
 		case EAST:
 			ImgFunc.setDirection(ship, "east");
 			for (int i = 0; i < ship.getLength(); i++)
-				Grid.get(pos.x, pos.y - i).setImage(ImgFunc.getDefaultImage());
+				Grid.get(position.x, position.y - i).setImage(ImgFunc.getDefaultImage());
 			break;
 		case SOUTH:
 			ImgFunc.setDirection(ship, "south");
 			for (int i = 0; i < ship.getLength(); i++)
-				Grid.get(pos.x - i, pos.y).setImage(ImgFunc.getDefaultImage());
+				Grid.get(position.x - i, position.y).setImage(ImgFunc.getDefaultImage());
 			break;
 		case WEST:
 			ImgFunc.setDirection(ship, "west");
 			for (int i = 0; i < ship.getLength(); i++)
-				Grid.get(pos.x, pos.y + i).setImage(ImgFunc.getDefaultImage());
+				Grid.get(position.x, position.y + i).setImage(ImgFunc.getDefaultImage());
 			break;
 		}
-		ship = null;
 	}
 	private Ship getShip(Shiptype s)
 	{
 		Ship boat = null;
 		switch(s)
 		{
-		case CARRIER:
-		{
-			boat = new Carrier(Ribbon.direction, pos);
-			break;
-		}
-		case GUNSHIP:
-		{
-			boat = new Gunship(Ribbon.direction, pos);
-			break;
-		}
-		case SUBMARINE:
-		{
-			boat = new Submarine(Ribbon.direction, pos);
-			break;
-		}
-		case DESTROYER:
-		{
-			boat = new Destroyer(Ribbon.direction, pos);
-			break;
-		}
-		case PATROLBOAT:
-		{
-			boat = new PatrolBoat(Ribbon.direction, pos);
-			break;
-		}
+		case CARRIER   : boat = new Carrier   (Ribbon.direction, pos); break;
+		case GUNSHIP   : boat = new Gunship   (Ribbon.direction, pos); break;
+		case SUBMARINE : boat = new Submarine (Ribbon.direction, pos); break;
+		case DESTROYER : boat = new Destroyer (Ribbon.direction, pos); break;
+		case PATROLBOAT: boat = new PatrolBoat(Ribbon.direction, pos); break;
 		}
 		return boat;
 	}
@@ -192,27 +218,33 @@ public class Cell
 			@Override
 			public void mouseClicked(MouseEvent arg0)
 			{
-				Ribbon.selectMode = false;	// Invert select mode
 				if (ship == null) // Don't do anything if I clicked a blank cell
-					return;
-				else
+					Battleship.setInfo("Ship: No ship here");
+				else if (Ribbon.selectMode)
+				{
 					Ribbon.addShip(ship); // Add ship to used ship list to keep it from being removed
+					Ribbon.disableSelected();
+				}
+				else
+					Battleship.setInfo("Ship: " + ship.toString());
+				Ribbon.selectMode = false;	// Invert select mode
 			}
 				@Override
 			public void mouseEntered(MouseEvent arg0) 
 			{
-				if (Ribbon.selectMode && !Ribbon.shipUsed(ship)) // Am I in select mode, and is there a placed ship here?
+				if (Ribbon.selectMode) // Am I in select mode, and is there a placed ship here?
 					if (addShip(getShip(Ribbon.shiptype)))
 						Battleship.setInfo("Ship set at " + pos);
 					else
-						Battleship.setInfo("Error adding ship at " + pos);	
+						Battleship.setInfo("Error adding ship at " + pos);
+					
 			}
 				@Override
 			public void mouseExited(MouseEvent arg0) 
 			{
-				if (Ribbon.selectMode && !Ribbon.shipUsed(ship)) // Am I in select mode, and is there a placed ship here?
+				if (Ribbon.selectMode) // Am I in select mode, and is there a placed ship here?
 					if (removeShip())
-						Battleship.setInfo("Ship set at " + pos);
+						Battleship.setInfo("Ship removed at " + pos);
 					else
 						Battleship.setInfo("Error removing ship at " + pos);
 			}

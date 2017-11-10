@@ -60,7 +60,7 @@ public class Battleship extends JFrame
 		Menu menu = new Menu();
 	    setJMenuBar(menu); // adds menu object to frame
 		this.add(panel);
-		this.setSize(675, 700);
+		this.setSize(525, 500);
 		this.setTitle("Battleship");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
