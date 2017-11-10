@@ -17,8 +17,8 @@ import Boat.Submarine;
 
 public class ImgFunc 
 {
-	private static int IMGSIZE_X = 60;
-	private static int IMGSIZE_Y = 60;
+	private static int IMGSIZE_X = 40;
+	private static int IMGSIZE_Y = 40;
 	private static String direction = "east";
 	public static JLabel getCarrierImage(int segment)
 	{
@@ -256,6 +256,36 @@ public class ImgFunc
 		}
 		return picLabel;
 	}
+	public static void setDestroyerImage(JLabel picLabel, int segment)
+	{
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+		switch(segment)
+		{
+		case 0:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\bow.png");
+			break;
+		case 1:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\body1.png");
+			break;
+		case 2:
+			imageIcon = new ImageIcon("resources\\" + direction + "\\stern.png");
+			break;
+		default:
+			imageIcon = null;
+		}
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel.setIcon(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Ship image not found");
+		}
+	}
 	public static JLabel getPatrolBoatImage(int segment)
 	{
 		JLabel picLabel = null;
@@ -363,7 +393,7 @@ public class ImgFunc
     			setSubmarineImage(s.getBodyImage(i), i);
     	else if (s instanceof Destroyer)
     		for (int i = 0; i < s.getLength(); i++)
-    			setGunshipImage(s.getBodyImage(i), i);
+    			setDestroyerImage(s.getBodyImage(i), i);
     	else if (s instanceof PatrolBoat)
     		for (int i = 0; i < s.getLength(); i++)
     			setPatrolBoatImage(s.getBodyImage(i), i);

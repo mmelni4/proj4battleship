@@ -10,10 +10,12 @@ import Logic.Point;
 public class Gunship extends Ship
 {
 	static final int len = 4;
+	static final Shiptype type = Shiptype.GUNSHIP;
 	JLabel body[];
 	public Gunship()
 	{
 		super();
+		setShiptype(type);
 		body = new JLabel[4];
 		for (int i = 0; i < len; i++)
 			body[i] = ImgFunc.getGunshipImage(i);
@@ -21,6 +23,7 @@ public class Gunship extends Ship
 	public Gunship(Direction d, Point p)
 	{
 		super(d,p,len);
+		setShiptype(type);
 		body = new JLabel[4];
 		for (int i = 0; i < len; i++)
 			body[i] = ImgFunc.getGunshipImage(i);

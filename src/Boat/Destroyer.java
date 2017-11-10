@@ -7,11 +7,13 @@ import Logic.Point;
 
 public class Destroyer extends Ship
 {
-	static final int len = 3;
+	final static int len = 3;
+	final static Shiptype type = Shiptype.DESTROYER;
 	JLabel body[];
 	public Destroyer()
 	{
 		super();
+		setShiptype(type);
 		body = new JLabel[4];
 		for (int i = 0; i < len; i++)
 			body[i] = ImgFunc.getDestroyerImage(i);
@@ -19,7 +21,8 @@ public class Destroyer extends Ship
 	public Destroyer(Direction d, Point p)
 	{
 		super(d,p,len);
-		body = new JLabel[4];
+		setShiptype(type);
+		body = new JLabel[3];
 		for (int i = 0; i < len; i++)
 			body[i] = ImgFunc.getDestroyerImage(i);
 	}

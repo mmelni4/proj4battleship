@@ -1,7 +1,9 @@
 package UI;
 
 import java.awt.BorderLayout;
+import java.awt.ComponentOrientation;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -12,6 +14,8 @@ import javax.swing.border.EmptyBorder;
 
 public class Battleship extends JFrame 
 {
+	static Ribbon ribbon;
+	static JPanel panel;
 	static JPanel gamePanel;
 	static JPanel opponentPanel;
 	static JPanel container;	
@@ -19,6 +23,8 @@ public class Battleship extends JFrame
 	static JLabel opponentLabel;
 	static JLabel infoLabel2;
 	static JLabel opponentLabel2;
+	
+	static JLabel opponentInfoLabel;
 	
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
@@ -30,6 +36,9 @@ public class Battleship extends JFrame
 	}
 	public Battleship()
 	{
+		panel = new JPanel();
+		
+		ribbon = new Ribbon();
 		container = new JPanel();		
 		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
 		container.setBorder(new EmptyBorder(10,10,10,10));
@@ -43,6 +52,10 @@ public class Battleship extends JFrame
 		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
 		gamePanel.add(infoLabel2, BorderLayout.SOUTH);
 		
+		panel.setLayout(new BorderLayout());
+		
+		gamePanel.setLayout(new BorderLayout());
+				
 		opponentPanel = new JPanel();
 		opponentPanel.setLayout(new BorderLayout());
 		opponentLabel = new JLabel("Your Opponent Status");
@@ -51,24 +64,26 @@ public class Battleship extends JFrame
 		opponentGrid = new OpponentGrid();
 	    opponentPanel.add(opponentGrid.getOppPanel(), BorderLayout.CENTER);
 		opponentPanel.add(opponentLabel2, BorderLayout.SOUTH);
-				
-		container.add(gamePanel);
-		container.add(opponentPanel);
 		
+		gamePanel.add(grid.getPanel(), BorderLayout.NORTH);
+		
+		gamePanel.add(ribbon.getPanel());
+		gamePanel.add(infoLabel, BorderLayout.SOUTH);
+		panel.add(gamePanel, BorderLayout.CENTER);
+		panel.add(ribbon.getPanel(), BorderLayout.EAST);
+		container.add(panel);
+		container.add(opponentPanel);
 		Menu menu = new Menu();
 	    setJMenuBar(menu); // adds menu object to frame
-	    		    
-	    this.add(container); // add two panels side-by-side to the frame    	    
-		this.setSize(1100, 600);		
-		
+		this.add(container);
+		this.setSize(1025, 500);
 		this.setTitle("Battleship");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
-		
 	}
 	public static void setInfo(String s)
 	{
-		infoLabel2.setText(s);
+		infoLabel.setText(s);
 	}
 	public static void setOpponentInfo(String s)
 	{

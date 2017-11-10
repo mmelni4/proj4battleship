@@ -24,7 +24,6 @@ public class Grid
 			}
 		Battleship.setInfo("Board setup complete");
 	}
-	
 	public static Cell get(int x, int y)
 	{
 		if (x < 0 || x > 9 
@@ -51,7 +50,8 @@ public class Grid
 		{
 			for (int j = 0; j < 10; j++)
 			{
-				gridPanel.add(grid[i][j].getImage());				
+				gridPanel.add(grid[i][j].getImage());
+				
 			}
 		}
 	}

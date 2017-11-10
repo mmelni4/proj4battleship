@@ -7,11 +7,14 @@ import Logic.Point;
 
 public class PatrolBoat extends Ship
 {
-	static final int len = 2;
+	final static int len = 2;
+	final static Shiptype type = Shiptype.PATROLBOAT;
 	JLabel body[];
+	
 	public PatrolBoat()
 	{
 		super();
+		setShiptype(type);
 		body = new JLabel[4];
 		for (int i = 0; i < len; i++)
 			body[i] = ImgFunc.getPatrolBoatImage(i);
@@ -19,6 +22,7 @@ public class PatrolBoat extends Ship
 	public PatrolBoat(Direction d, Point p)
 	{
 		super(d,p,len);
+		setShiptype(type);
 		body = new JLabel[4];
 		for (int i = 0; i < len; i++)
 			body[i] = ImgFunc.getPatrolBoatImage(i);
