@@ -45,8 +45,21 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 				public void actionPerformed(ActionEvent e) {
 					JOptionPane.showMessageDialog(menu, 
 							"How to Play Battleship:"
-							+ "\nThe goal of the game is "
-							+ "to...");
+									+ "\nThe game is played on four squares"
+									+ "\nEach player has two grids, one for its own ships"
+									+ "\nOther grid is to keep track of opponent ships."
+									+ "\nStart with placing ships on your grid:"
+									+ "\n1 Aircraft Carrier of size 5"
+									+ "\n1 Battleship of size 4"
+									+ "\nOne destroyer of size 3"
+									+ "\nOne submarine of size 3"
+									+ "\nAnd one patrol boat of size 2"
+									+ "\nEach player has the same number of ships"
+									+ "\nShips cannot overlap and be placed outside of borders"
+									+ "\nOnce all the ships has been placed,"
+									+ "\nProceed to establish connection"
+									+ "\nWhen all of your/your opponent ships are sink"
+									+ "\nGame is over");
 				}
 			});
 			submenu.add(menuItem);
