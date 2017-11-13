@@ -32,11 +32,23 @@ public class Server
 		catch (IOException e) 
         { 
 			JOptionPane.showMessageDialog(null, "Could not listen on port: " + port); 
-			connected = false; 
+			connected = false;
+			return;
         } 
 
 		JOptionPane.showMessageDialog(null, "Connection success");
 		connected = true;
+		/*
+		try 
+		{ 
+			JOptionPane.showMessageDialog(null, "Waiting for client");
+			clientSocket = connectionSocket.accept();
+		} 
+		catch (IOException e) 
+		{ 	
+			JOptionPane.showMessageDialog(null, "Accept failed."); 
+			System.exit(1); 
+		} */
 	}
 	public boolean isServer()
 	{
@@ -44,17 +56,6 @@ public class Server
 	}
 	public static void Listen()
 	{
-		try 
-		{ 
-			Battleship.setInfo("Waiting for client");
-			clientSocket = connectionSocket.accept();
-		} 
-		catch (IOException e) 
-		{ 	
-			Battleship.setInfo("Accept failed."); 
-			System.exit(1); 
-		} 
-
 		try 
 		{
 			out = new ObjectOutputStream(clientSocket.getOutputStream()); 
