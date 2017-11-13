@@ -242,19 +242,33 @@ public class Cell
 			@Override
 			public void mouseClicked(MouseEvent arg0)
 			{
-				if (ship == null) // Don't do anything if I clicked a blank cell
-					Battleship.setInfo("Ship: No ship here");
-				else if (Ribbon.selectMode)
+				if (!Battleship.boardisReady())
 				{
-					Ribbon.addShip(ship); // Add ship to used ship list to keep it from being removed
-					Ribbon.disableSelected();
-					Ribbon.shipsUsed++;
-					if (Ribbon.shipsUsed == 5)
-						Battleship.setReady(true);
+					if (ship == null) // Don't do anything if I clicked a blank cell
+						Battleship.setInfo("Ship: No ship here");
+					else if (Ribbon.selectMode)
+					{
+						Ribbon.addShip(ship); // Add ship to used ship list to keep it from being removed
+						Ribbon.disableSelected();
+						Ribbon.shipsUsed++;
+						if (Ribbon.shipsUsed == 5)
+							Battleship.setReady(true);
+					}
+					else
+						Battleship.setInfo("Ship: " + ship.toString());
+					Ribbon.selectMode = false;	// Invert select mode
 				}
 				else
-					Battleship.setInfo("Ship: " + ship.toString());
-				Ribbon.selectMode = false;	// Invert select mode
+				{
+					if (Battleship.isServer())
+					{
+						Battleship.server.ReceiveData();
+					}
+					else
+					{
+						Battleship.client.ReceiveData();
+					}
+				}
 			}
 				@Override
 			public void mouseEntered(MouseEvent arg0) 
@@ -289,7 +303,6 @@ public class Cell
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 					{
-						
 						if (Battleship.boardisReady())
 							// Server
 							if (Battleship.server.isServer())

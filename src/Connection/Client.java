@@ -15,22 +15,25 @@ public class Client
 	private static Socket echoSocket;
 	private static ObjectInputStream in;
 	private static ObjectOutputStream out;
-	public Client()
+	private static boolean bOnce = false;
+	
+	public Client() throws IOException
 	{
-		ip = "127.0.0.1";
+		InetAddress addr;
+		addr = InetAddress.getLocalHost();
+		ip = addr.getHostAddress();
+		//JOptionPane.showInputDialog("Enter IP address:");
 		echoSocket = null;
+		initiateClient();
 	}
     public static void initiateClient() throws IOException 
     {
-    	
         out = null;
         in = null;
 
         try
         {
             echoSocket = new Socket(ip, port);
-            out = new ObjectOutputStream(echoSocket.getOutputStream());
-            in = new ObjectInputStream(echoSocket.getInputStream());
         } catch (UnknownHostException e) {
             JOptionPane.showMessageDialog(null ,"Don't know about host: " + ip);
             System.exit(1);
@@ -39,26 +42,42 @@ public class Client
                                + "the connection to: " + ip);
             System.exit(1);
         }
-
-        //DataPacket pt1 = new DataPacket();
-        Point pt2 = null;
-        //Battleship.setInfo("Sending point: " + pt1 + " to Server");
-        //out.writeObject(pt1);
-        //out.flush();
-        //Battleship.setInfo("Point sent, waiting for return value");
-        try 
-        {
-        	pt2 = (Point) in.readObject();
-        }
-        catch (Exception ex)
-        {
-        	System.out.println (ex.getMessage());
-        }
-        System.out.println("Got point: " + pt2 + " from Server");
         
     }
-    public static void SendData(Point p)
+    public void ReceiveData()
     {
+    	try
+    	{
+    		if (in == null)
+    		{
+    			in = new ObjectInputStream(echoSocket.getInputStream());
+    		}
+    	} catch (IOException e)
+    	{
+    		JOptionPane.showMessageDialog(null, "Client: Could not open input object stream");
+    	}
+    	try {
+			Point p = (Point) in.readObject();
+			Battleship.setInfo("Receieved point: " + p);
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Client: Could not receive data");
+		}
+    }
+    public void SendData(Point p)
+    {
+        try 
+        {
+        	if (out == null)
+        	{
+        		out = new ObjectOutputStream(echoSocket.getOutputStream());
+        	}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Could not open input/output object stream");
+		}
     	try 
     	{
 			out.writeObject(p);

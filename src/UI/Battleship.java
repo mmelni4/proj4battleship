@@ -33,7 +33,7 @@ public class Battleship extends JFrame
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
 	private static boolean ready;
-	
+	private static boolean bServer = false;
 	public static Server server;
 	public static Client client;
 	
@@ -102,6 +102,14 @@ public class Battleship extends JFrame
 	public static boolean boardisReady()
 	{
 		return ready;
+	}
+	public static boolean isServer()
+	{
+		return bServer;
+	}
+	public static void setServer(boolean b)
+	{
+		bServer = b;
 	}
 	public static void setInfo(String s)
 	{

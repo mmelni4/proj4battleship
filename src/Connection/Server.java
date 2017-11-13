@@ -16,7 +16,8 @@ public class Server
 	private static Socket clientSocket;
 	private static ObjectInputStream in;
 	private static ObjectOutputStream out;
-	private static boolean connected = false;
+	
+	private static boolean bOnce = false;
 	public Server()
 	{	
 		try 
@@ -32,13 +33,13 @@ public class Server
 		catch (IOException e) 
         { 
 			JOptionPane.showMessageDialog(null, "Could not listen on port: " + port); 
-			connected = false;
+			Battleship.setServer(false);
 			return;
         } 
 
 		JOptionPane.showMessageDialog(null, "Connection success");
-		connected = true;
-		/*
+		Battleship.setServer(true);
+		
 		try 
 		{ 
 			JOptionPane.showMessageDialog(null, "Waiting for client");
@@ -48,11 +49,11 @@ public class Server
 		{ 	
 			JOptionPane.showMessageDialog(null, "Accept failed."); 
 			System.exit(1); 
-		} */
+		} 
 	}
 	public boolean isServer()
 	{
-		return connected;
+		return Battleship.isServer();
 	}
 	public static void Listen()
 	{
@@ -79,9 +80,41 @@ public class Server
 			System.err.println("Accept failed."); 
 			System.exit(1); 
 		}
-	} 
-	public static void SendData(Point p)
+	}
+	public void ReceiveData()
     {
+    	try
+    	{
+    		if (in == null)
+    		{
+    			in = new ObjectInputStream(clientSocket.getInputStream());
+    		}
+    	} catch (IOException e)
+    	{
+    		JOptionPane.showMessageDialog(null, "Client: Could not open input object stream");
+    	}
+    	try {
+			Point p = (Point) in.readObject();
+			Battleship.setInfo("Receieved point: " + p);
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Server: Could not receive data");
+		}
+    }
+	public void SendData(Point p)
+    {
+        try 
+        {
+        	if (out == null)
+        	{
+        		out = new ObjectOutputStream(clientSocket.getOutputStream());
+        	}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Server: Could not open output object stream");
+		}
     	try 
     	{
 			out.writeObject(p);
