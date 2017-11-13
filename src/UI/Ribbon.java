@@ -32,7 +32,6 @@ public class Ribbon
     private static JButton   destroyerButton;
     private static JButton   patrolButton;
     
-    
     private static JButton   selectedButton;
     
     private static ArrayList<Ship> shiplist;

@@ -242,33 +242,19 @@ public class Cell
 			@Override
 			public void mouseClicked(MouseEvent arg0)
 			{
-				if (!Battleship.boardisReady())
+				if (ship == null) // Don't do anything if I clicked a blank cell
+					Battleship.setInfo("Ship: No ship here");
+				else if (Ribbon.selectMode)
 				{
-					if (ship == null) // Don't do anything if I clicked a blank cell
-						Battleship.setInfo("Ship: No ship here");
-					else if (Ribbon.selectMode)
-					{
-						Ribbon.addShip(ship); // Add ship to used ship list to keep it from being removed
-						Ribbon.disableSelected();
-						Ribbon.shipsUsed++;
-						if (Ribbon.shipsUsed == 5)
-							Battleship.setReady(true);
-					}
-					else
-						Battleship.setInfo("Ship: " + ship.toString());
-					Ribbon.selectMode = false;	// Invert select mode
+					Ribbon.addShip(ship); // Add ship to used ship list to keep it from being removed
+					Ribbon.disableSelected();
+					Ribbon.shipsUsed++;
+					if (Ribbon.shipsUsed == 5)
+						Battleship.setReady(true);
 				}
 				else
-				{
-					if (Battleship.isServer())
-					{
-						Battleship.server.ReceiveData();
-					}
-					else
-					{
-						Battleship.client.ReceiveData();
-					}
-				}
+					Battleship.setInfo("Ship: " + ship.toString());
+				Ribbon.selectMode = false;	// Invert select mode
 			}
 				@Override
 			public void mouseEntered(MouseEvent arg0) 
@@ -303,7 +289,8 @@ public class Cell
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 					{
-						if (Battleship.boardisReady())
+						//if (Battleship.boardisReady() && Battleship.ismyTurn())
+						//{
 							// Server
 							if (Battleship.server.isServer())
 							{
@@ -314,7 +301,20 @@ public class Cell
 							{
 								Battleship.client.SendData(pos);
 							}
-						
+							Battleship.useTurn();
+						//}
+						//else if (!Battleship.ismyTurn())
+						//{
+							if (Battleship.isServer())
+							{
+								Battleship.server.ReceiveData();
+							}
+							else
+							{
+								Battleship.client.ReceiveData();
+							}
+							Battleship.useTurn();
+						//}
 					}
 
 

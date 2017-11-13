@@ -5,6 +5,7 @@ import java.net.*;
 
 import javax.swing.JOptionPane;
 
+import ImageOp.ImgFunc;
 import Logic.Point;
 import UI.Battleship;
 
@@ -21,8 +22,7 @@ public class Client
 	{
 		InetAddress addr;
 		addr = InetAddress.getLocalHost();
-		ip = addr.getHostAddress();
-		//JOptionPane.showInputDialog("Enter IP address:");
+		ip = JOptionPane.showInputDialog("Enter IP address:");
 		echoSocket = null;
 		initiateClient();
 	}
@@ -56,9 +56,11 @@ public class Client
     	{
     		JOptionPane.showMessageDialog(null, "Client: Could not open input object stream");
     	}
-    	try {
+    	try 
+    	{
 			Point p = (Point) in.readObject();
 			Battleship.setInfo("Receieved point: " + p);
+			ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
 		} catch (ClassNotFoundException e) {
 			
 			e.printStackTrace();
@@ -84,6 +86,7 @@ public class Client
 			out.flush();
 		} catch (IOException e) {
 			Battleship.setInfo("Could not send point: " + p);
+			System.out.println(e);
 		}
     }
     public static void CloseConnection()

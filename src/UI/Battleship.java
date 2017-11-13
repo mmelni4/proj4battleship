@@ -36,6 +36,7 @@ public class Battleship extends JFrame
 	private static boolean bServer = false;
 	public static Server server;
 	public static Client client;
+	private static boolean myturn = false;
 	
 	public static void main(String args[])
 	{
@@ -111,9 +112,21 @@ public class Battleship extends JFrame
 	{
 		bServer = b;
 	}
+	public static Grid getGrid()
+	{
+		return grid;
+	}
 	public static void setInfo(String s)
 	{
 		infoLabel2.setText(s);
+	}
+	public static boolean ismyTurn()
+	{
+		return myturn;
+	}
+	public static void useTurn()
+	{
+		myturn = !myturn;
 	}
 	public static void setOpponentInfo(String s)
 	{

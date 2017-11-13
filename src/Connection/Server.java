@@ -4,6 +4,7 @@ import java.net.*;
 
 import javax.swing.JOptionPane;
 
+import ImageOp.ImgFunc;
 import Logic.Point;
 import UI.Battleship;
 
@@ -55,32 +56,6 @@ public class Server
 	{
 		return Battleship.isServer();
 	}
-	public static void Listen()
-	{
-		try 
-		{
-			out = new ObjectOutputStream(clientSocket.getOutputStream()); 
-			in = new ObjectInputStream(clientSocket.getInputStream()); 
-       
-			Point a = null;	    
- 
-			try 
-			{
-				a = (Point) in.readObject();
-				Battleship.setInfo("Received point: " + a.toString());
-		    }
-		    catch (Exception ex)
-		    {
-		    	System.out.println (ex.getMessage());
-		    }
-			 
-		}
-		catch (IOException e)
-		{
-			System.err.println("Accept failed."); 
-			System.exit(1); 
-		}
-	}
 	public void ReceiveData()
     {
     	try
@@ -96,6 +71,7 @@ public class Server
     	try {
 			Point p = (Point) in.readObject();
 			Battleship.setInfo("Receieved point: " + p);
+			ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
 		} catch (ClassNotFoundException e) {
 			
 			e.printStackTrace();
