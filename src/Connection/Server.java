@@ -1,73 +1,99 @@
 package Connection;
 
-import java.net.*; 
+import java.net.*;
+
+import javax.swing.JOptionPane;
+
+import Logic.Point;
+import UI.Battleship;
+
 import java.io.*; 
 
 
 
 public class Server 
 { 
+	private static int port;
+	private static String ip;
 	public Server()
 	{
 		
 	}
- public static void initiateServer() 
-   { 
-    ServerSocket connectionSocket = null; 
-
-    try { 
-         connectionSocket = new ServerSocket(6789); 
-         System.out.println ("Socket open on Port: " +
+	public static void initiateServer() 
+	{ 
+		ServerSocket connectionSocket = null; 
+		port = 6789;
+		try 
+		{ 
+			connectionSocket = new ServerSocket(port); 
+			JOptionPane.showMessageDialog(null, "Socket open on Port: " +
                              connectionSocket.getLocalPort());
-         InetAddress addr = InetAddress.getLocalHost();
-         System.out.println("Java InetAddress localHost info: " + addr);
-         System.out.println("Local Host Name: " + addr.getHostName());
-         System.out.println("Local Host Address: " + addr.getHostAddress());
+			InetAddress addr = InetAddress.getLocalHost();
+			JOptionPane.showMessageDialog(null, "Java InetAddress localHost info: " + addr + "\n"
+         		+ "Local Host Name: " + addr.getHostName() + "\n"
+         		+ "Local Host Address: " + addr.getHostAddress());
+			ip = addr.getHostAddress();
         } 
-    catch (IOException e) 
+		catch (IOException e) 
         { 
-         System.err.println("Could not listen on port: 6789."); 
-         System.exit(1); 
+			System.err.println("Could not listen on port: " + port); 
+			System.exit(1); 
         } 
 
-    Socket communicationSocket = null; 
+		Socket clientSocket = null;  
+		try {
+			connectionSocket.close();
+		} catch (IOException e1) {
+			Battleship.setInfo("Cannot close port: " + port);
+		}
+		Battleship.setInfo("Connection success");
+		return;
+	}
+	public static void SendPoint()
+	{
+		try 
+		{ 
+			Battleship.setInfo("Waiting for client");
+			clientSocket = connectionSocket.accept(); 
+		} 
+		catch (IOException e) 
+		{ 	
+			Battleship.setInfo("Accept failed."); 
+			System.exit(1); 
+		} 
 
-    try { 
-         communicationSocket = connectionSocket.accept(); 
-        } 
-    catch (IOException e) 
-        { 
-         System.err.println("Accept failed."); 
-         System.exit(1); 
-        } 
+		try 
+		{
+			ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream()); 
+			ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream()); 
+       
+			DataPacket a = null;
+			DataPacket b = null;
+	    
 
-   try {
-	   
-    PrintWriter out = new PrintWriter(communicationSocket.getOutputStream(), 
-                                      true); 
-    BufferedReader in = new BufferedReader( 
-            new InputStreamReader( communicationSocket.getInputStream())); 
+			while (true) 
+			{ 
+				try 
+				{
+					a = (DataPacket) in.readObject();
+					Battleship.setInfo("Received point: " + a.toString());
+			    }
+			    catch (Exception ex)
+			    {
+			    	System.out.println (ex.getMessage());
+			    	break;
+			    }
+			} 
 
-    String inputLine; 
-
-    while ((inputLine = in.readLine()) != null) 
-        { 
-         System.out.println ("Server: " + inputLine); 
-         out.println(inputLine); 
-
-         if (inputLine.equals("Bye.")) 
-             break; 
-        } 
-
-    out.close(); 
-    in.close(); 
-    communicationSocket.close(); 
-    connectionSocket.close(); 
-   }
-   catch (IOException e)
-   {
-	   System.err.println("Accept failed."); 
-       System.exit(1); 
-   }
-   } 
+			out.close(); 
+			in.close(); 
+			clientSocket.close(); 
+			connectionSocket.close(); 
+		}
+		catch (IOException e)
+		{
+			System.err.println("Accept failed."); 
+			System.exit(1); 
+		}
+	} 
 } 

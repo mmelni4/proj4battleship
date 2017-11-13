@@ -3,40 +3,55 @@ package Connection;
 import java.io.*;
 import java.net.*;
 
-public class Client {
-    public static void initiateClient() throws IOException {
+import javax.swing.JOptionPane;
 
+import UI.Battleship;
+
+public class Client
+{
+    public static void initiateClient() throws IOException 
+    {
+    	String ip = new String();
+    	ip = "127.0.0.1";
+    	int port = 6789;
         Socket echoSocket = null;
-        PrintWriter out = null;
-        BufferedReader in = null;
+        ObjectOutputStream out = null;
+        ObjectInputStream in = null;
 
-        try {
-            echoSocket = new Socket("127.0.0.1", 6789);
-            out = new PrintWriter(echoSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(
-                                        echoSocket.getInputStream()));
+        try
+        {
+            echoSocket = new Socket(ip, port);
+            out = new ObjectOutputStream(echoSocket.getOutputStream());
+            in = new ObjectInputStream(echoSocket.getInputStream());
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host: taranis.");
+            Battleship.setInfo("Don't know about host: " + ip);
             System.exit(1);
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for "
-                               + "the connection to: taranis.");
+            Battleship.setInfo("Couldn't get I/O for "
+                               + "the connection to: " + ip);
             System.exit(1);
         }
 
-	BufferedReader stdIn = new BufferedReader(
-                                   new InputStreamReader(System.in));
-	String userInput;
+        DataPacket pt1 = new DataPacket();
+        DataPacket pt2 = null;
+        Battleship.setInfo("Sending point: " + pt1 + " to Server");
+        out.writeObject(pt1);
+        out.flush();
+        Battleship.setInfo("Point sent, waiting for return value");
 
-	while ((userInput = stdIn.readLine()) != null) {
-	    out.println(userInput);
-	    System.out.println("echo: " + in.readLine());
-	}
+        try 
+        {
+             pt2 = (DataPacket) in.readObject();
+        }
+        catch (Exception ex)
+        {
+             System.out.println (ex.getMessage());
+        }
 
-	out.close();
-	in.close();
-	stdIn.close();
-	echoSocket.close();
+        System.out.println("Got point: " + pt2 + " from Server");
+
+		out.close();
+		in.close();
+		echoSocket.close();
     }
 }
-

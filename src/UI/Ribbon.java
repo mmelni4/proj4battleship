@@ -54,12 +54,12 @@ public class Ribbon
         rPanel.setMaximumSize(new Dimension(100, 25));
         rPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         
-        rotateButton    = new JButton("Rotate         "); setSize(rotateButton   );
-        carrierButton   = new JButton("Carrier        "    ); setSize(carrierButton  );
-        gunshipButton   = new JButton("Gunship      "    ); setSize(gunshipButton  );
-        subButton       = new JButton("Submarine "  ); setSize(subButton      );
-        destroyerButton = new JButton("Destroyer   "  ); setSize(destroyerButton);
-        patrolButton    = new JButton("Patrol Boat "); setSize(patrolButton   );
+        rotateButton    = new JButton("Rotate"     ); setSize(rotateButton   );
+        carrierButton   = new JButton("Carrier"    ); setSize(carrierButton  );
+        gunshipButton   = new JButton("Gunship"    ); setSize(gunshipButton  );
+        subButton       = new JButton("Submarine"  ); setSize(subButton      );
+        destroyerButton = new JButton("Destroyer"  ); setSize(destroyerButton);
+        patrolButton    = new JButton("Patrol Boat"); setSize(patrolButton   );
         selectedButton  = null;
         
         addListener();
