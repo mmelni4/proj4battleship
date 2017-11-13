@@ -9,22 +9,18 @@ import UI.Battleship;
 
 import java.io.*; 
 
-
-
 public class Server 
 { 
-	private static int port;
-	private static String ip;
+	private final static int port = 6789;
+	private static ServerSocket connectionSocket;
+	private static Socket clientSocket;
+	private static ObjectInputStream in;
+	private static ObjectOutputStream out;
+	private static boolean connected = false;
 	public Server()
-	{
-		
-	}
-	public static void initiateServer() 
-	{ 
-		ServerSocket connectionSocket = null; 
-		port = 6789;
+	{	
 		try 
-		{ 
+		{
 			connectionSocket = new ServerSocket(port); 
 			JOptionPane.showMessageDialog(null, "Socket open on Port: " +
                              connectionSocket.getLocalPort());
@@ -32,29 +28,26 @@ public class Server
 			JOptionPane.showMessageDialog(null, "Java InetAddress localHost info: " + addr + "\n"
          		+ "Local Host Name: " + addr.getHostName() + "\n"
          		+ "Local Host Address: " + addr.getHostAddress());
-			ip = addr.getHostAddress();
         } 
 		catch (IOException e) 
         { 
-			System.err.println("Could not listen on port: " + port); 
-			System.exit(1); 
+			JOptionPane.showMessageDialog(null, "Could not listen on port: " + port); 
+			connected = false; 
         } 
 
-		Socket clientSocket = null;  
-		try {
-			connectionSocket.close();
-		} catch (IOException e1) {
-			Battleship.setInfo("Cannot close port: " + port);
-		}
-		Battleship.setInfo("Connection success");
-		return;
+		JOptionPane.showMessageDialog(null, "Connection success");
+		connected = true;
 	}
-	public static void SendPoint()
+	public boolean isServer()
+	{
+		return connected;
+	}
+	public static void Listen()
 	{
 		try 
 		{ 
 			Battleship.setInfo("Waiting for client");
-			clientSocket = connectionSocket.accept(); 
+			clientSocket = connectionSocket.accept();
 		} 
 		catch (IOException e) 
 		{ 	
@@ -64,31 +57,21 @@ public class Server
 
 		try 
 		{
-			ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream()); 
-			ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream()); 
+			out = new ObjectOutputStream(clientSocket.getOutputStream()); 
+			in = new ObjectInputStream(clientSocket.getInputStream()); 
        
-			DataPacket a = null;
-			DataPacket b = null;
-	    
-
-			while (true) 
-			{ 
-				try 
-				{
-					a = (DataPacket) in.readObject();
-					Battleship.setInfo("Received point: " + a.toString());
-			    }
-			    catch (Exception ex)
-			    {
-			    	System.out.println (ex.getMessage());
-			    	break;
-			    }
-			} 
-
-			out.close(); 
-			in.close(); 
-			clientSocket.close(); 
-			connectionSocket.close(); 
+			Point a = null;	    
+ 
+			try 
+			{
+				a = (Point) in.readObject();
+				Battleship.setInfo("Received point: " + a.toString());
+		    }
+		    catch (Exception ex)
+		    {
+		    	System.out.println (ex.getMessage());
+		    }
+			 
 		}
 		catch (IOException e)
 		{
@@ -96,4 +79,30 @@ public class Server
 			System.exit(1); 
 		}
 	} 
+	public static void SendData(Point p)
+    {
+    	try 
+    	{
+			out.writeObject(p);
+			out.flush();
+		} catch (IOException e) {
+			Battleship.setInfo("Could not send point: " + p);
+		}
+    }
+	private static void CloseConnection()
+	{
+		try 
+		{
+			in.close();
+			out.close();
+			clientSocket.close();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Could not close client connection");
+		} 
+		try {
+			connectionSocket.close();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Could not close server connection");
+		} 
+	}
 } 

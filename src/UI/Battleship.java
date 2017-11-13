@@ -13,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Connection.Client;
+import Connection.Server;
+
 
 public class Battleship extends JFrame 
 {
@@ -29,6 +32,10 @@ public class Battleship extends JFrame
 	private FlowLayout layout;
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
+	private static boolean ready;
+	
+	public static Server server;
+	public static Client client;
 	
 	public static void main(String args[])
 	{
@@ -37,6 +44,7 @@ public class Battleship extends JFrame
 	}
 	public Battleship()
 	{
+		ready = false;
 		panel = new JPanel();
 		ribbon = new Ribbon();
 		container = new JPanel();		
@@ -82,6 +90,18 @@ public class Battleship extends JFrame
 		this.setTitle("Battleship");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
+	}
+	public static void setReady(boolean b)
+	{
+		ready = b;
+	}
+	public static boolean connectionReady()
+	{
+		return false;
+	}
+	public static boolean boardisReady()
+	{
+		return ready;
 	}
 	public static void setInfo(String s)
 	{

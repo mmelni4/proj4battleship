@@ -44,6 +44,7 @@ public class Cell
 		pos = new Point(x, y);
 		img = ImgFunc.getDefaultImage();
 		ship = null;
+		status = status.EMPTY;
 		addListener();
 	}
 	public Cell(int x, int y, int id)
@@ -247,6 +248,9 @@ public class Cell
 				{
 					Ribbon.addShip(ship); // Add ship to used ship list to keep it from being removed
 					Ribbon.disableSelected();
+					Ribbon.shipsUsed++;
+					if (Ribbon.shipsUsed == 5)
+						Battleship.setReady(true);
 				}
 				else
 					Battleship.setInfo("Ship: " + ship.toString());
@@ -285,23 +289,20 @@ public class Cell
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 					{
-						/*if(pos.status == 0)
-								{
-									pos.setStatus = 3;
-									pos.setImage(yellow);
-									Battleship.setOpponentInfo("Missed!");
-								}
-							else if(pos.status == 1)
+						
+						if (Battleship.boardisReady())
+							// Server
+							if (Battleship.server.isServer())
 							{
-								pos.setStatus = 2; //status 2 = hit
-								//pos.getBodyImage(ship.getPosition());
-								int imageToSet = mapImage(pos.getBodyImage(ship.getPosition());
-								pos.setImage(imageToSet);
-								Battleship.setInfo("Hit at position: " + pos);
+								Battleship.server.SendData(pos);
 							}
-							else if(pos.status == 2 || pos.status == 3)
-								Battleship.setOpponentInfo("Error adding ship at " + pos);												
-					*/}
+							// Client
+							else
+							{
+								Battleship.client.SendData(pos);
+							}
+						
+					}
 
 
 					@Override

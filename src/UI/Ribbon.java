@@ -25,12 +25,13 @@ public class Ribbon
 {
     private JPanel    rPanel;
     private BoxLayout layout;
-    private JButton   rotateButton;
-    private JButton   carrierButton;
-    private JButton   gunshipButton;
-    private JButton   subButton;
-    private JButton   destroyerButton;
-    private JButton   patrolButton;
+    private static JButton   rotateButton;
+    private static JButton   carrierButton;
+    private static JButton   gunshipButton;
+    private static JButton   subButton;
+    private static JButton   destroyerButton;
+    private static JButton   patrolButton;
+    
     
     private static JButton   selectedButton;
     
@@ -38,6 +39,7 @@ public class Ribbon
     private ActionListener boatListener;
     public static Shiptype shiptype;
     public static Direction direction;
+    public static int shipsUsed = 0;
     public static boolean selectMode = false;
     
     public Ribbon()
@@ -79,6 +81,7 @@ public class Ribbon
         rPanel.add(destroyerButton);
         rPanel.add(patrolButton   );
         
+        setEnableAllButtons(false);
     }
     private void setSize(JButton j)
     {
@@ -119,6 +122,15 @@ public class Ribbon
             }
             
         });
+    }
+    public static void setEnableAllButtons(boolean b)
+    {
+    	rotateButton.setEnabled(b)   ;
+        carrierButton.setEnabled(b)  ;
+        gunshipButton.setEnabled(b)  ;
+        subButton.setEnabled(b)  ;
+        destroyerButton.setEnabled(b);
+        patrolButton.setEnabled(b);
     }
     public static void disableSelected()
     {

@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
+import Connection.Client;
 import Connection.Server;
 
 /******************************************************************
@@ -26,7 +27,8 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 	JMenuItem menuItem;
 	
 	//JMenu Help box section is divided in two sub menu items for easier use
-	public Menu() {
+	public Menu() 
+	{
 
 		menu = new JMenu("Menu");
 		  submenu = new JMenu("Help Menu");
@@ -52,8 +54,17 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 			menuItem = new JMenuItem("Establish Connection"); 
 			menuItem.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					try {
-						Server.initiateServer();
+					try 
+					{
+						Battleship.server = new Server();
+						if (!Battleship.server.isServer())
+						{
+							Battleship.client = new Client();
+							Ribbon.setEnableAllButtons(true);
+						}
+						if (Battleship.server.isServer())
+							Ribbon.setEnableAllButtons(true);
+							
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -88,9 +99,9 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 	
 	}
 	
-	public void actionPerformed(ActionEvent e) {
-	//...Get information from the action event...
-	//...Display it in the text area...
+	public void actionPerformed(ActionEvent e) 
+	{
+		JMenuItem j = (JMenuItem) e.getSource();
 	}
 	
 	public void itemStateChanged(ItemEvent e) {
