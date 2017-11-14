@@ -16,12 +16,9 @@ public class Client
 	private static Socket echoSocket;
 	private static ObjectInputStream in;
 	private static ObjectOutputStream out;
-	private static boolean bOnce = false;
 	
 	public Client() throws IOException
 	{
-		InetAddress addr;
-		addr = InetAddress.getLocalHost();
 		ip = JOptionPane.showInputDialog("Enter IP address:");
 		echoSocket = null;
 		initiateClient();

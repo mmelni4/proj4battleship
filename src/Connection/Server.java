@@ -18,12 +18,11 @@ public class Server
 	private static ObjectInputStream in;
 	private static ObjectOutputStream out;
 	
-	private static boolean bOnce = false;
 	public Server()
 	{	
 		try 
 		{
-			connectionSocket = new ServerSocket(port); 
+			connectionSocket = new ServerSocket(port);
 			JOptionPane.showMessageDialog(null, "Socket open on Port: " +
                              connectionSocket.getLocalPort());
 			InetAddress addr = InetAddress.getLocalHost();
