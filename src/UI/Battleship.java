@@ -17,6 +17,7 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import Connection.Client;
 import Connection.Server;
@@ -34,6 +35,9 @@ public class Battleship extends JFrame
 	static JLabel infoLabel2;
 	static JLabel opponentLabel2;	
 	static JLabel opponentInfoLabel;
+	static JPanel labelPanel;
+	//static JPanel letters;
+	static JLabel letters;
 	private FlowLayout layout;
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
@@ -53,10 +57,21 @@ public class Battleship extends JFrame
 		ready = false;
 		panel = new JPanel();
 		ribbon = new Ribbon();
+		labelPanel = new JPanel();
+		labelPanel.setLayout(new BorderLayout());
 		container = new JPanel();		
 		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
 		layout = new FlowLayout();
-	    container.setLayout( layout );
+		letters = new JLabel("    A           B            C          D"
+				+ "           E             F             G          "
+				+ "  H           I           J");
+		//letters = new JPanel();
+		/*JLabel[] labels=new JLabel[10];
+		        for (int i=0;i<10;i++){
+		            labels[i]= new JLabel("     " + i + "     ");
+		            letters.add(labels[i]);
+		        }*/
+		container.setLayout( layout );
 		container.setBorder(new EmptyBorder(10,10,10,10));
 		
 		gamePanel = new JPanel();
@@ -65,7 +80,9 @@ public class Battleship extends JFrame
 		
 		infoLabel2 = new JLabel("Updates will be shown here");
 		grid = new Grid();
-		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
+		//grid.getPanel().setLayout(new BorderLayout());
+		//grid.getPanel().add(letters);
+		//gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
 		
 		panel.setLayout(new BorderLayout());
 		
@@ -80,10 +97,12 @@ public class Battleship extends JFrame
 	    opponentPanel.add(opponentGrid.getOppPanel(), BorderLayout.CENTER);
 		opponentPanel.add(opponentLabel2, BorderLayout.SOUTH);
 		
-		gamePanel.add(grid.getPanel(), BorderLayout.NORTH);		
+		gamePanel.add(grid.getPanel(), BorderLayout.NORTH);	
+		labelPanel.add(infoLabel, BorderLayout.NORTH);
+		labelPanel.add(letters, BorderLayout.SOUTH);
 		gamePanel.add(ribbon.getPanel());
-		
-		panel.add(infoLabel, BorderLayout.NORTH);
+		panel.add(labelPanel, BorderLayout.NORTH);
+		//panel.add(infoLabel, BorderLayout.NORTH);
 		panel.add(infoLabel2, BorderLayout.SOUTH);
 		panel.add(gamePanel, BorderLayout.CENTER);
 		panel.add(ribbon.getPanel(), BorderLayout.EAST);
@@ -126,7 +145,7 @@ public class Battleship extends JFrame
 	}
 	public static void setInfo(String s)
 	{
-		infoLabel2.setText(s); // info displayed in players Grad label
+		infoLabel2.setText(s); // info displayed in players Grid label
 	}
 	public static boolean ismyTurn()
 	{
