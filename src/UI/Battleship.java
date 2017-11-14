@@ -1,28 +1,33 @@
+// main class Battleship initiates the game
+// Game doesn't start until connection is successfully
+// established initiated from Menu class 
+// Battleship sets up a "parent" container for two JPanels
+// that sets them side by side, using separate classes for differentiation
+// Each "child" panel has two labels, one to display the players grid
+// Another label is to display grid information, 
+// every time Button(JLabel/Cell) is pressed, information about coordinates
+// or when Error is encountered 
+
+
 package UI;
 
 import java.awt.BorderLayout;
-import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import Connection.Client;
 import Connection.Server;
 
-
+@SuppressWarnings("serial")
 public class Battleship extends JFrame 
 {
-	static Ribbon ribbon;
-	static JPanel panel;
-	static JPanel gamePanel;
-	static JPanel opponentPanel;
+	static Ribbon ribbon; // Buttons to click when placing ships on the grid
+	static JPanel panel; // "parent" panel
+	static JPanel gamePanel; // "child" panel located on the right that represents player's grid
+	static JPanel opponentPanel; // panel located on the right side, represents opponent's
 	static JPanel container;	
 	static JLabel infoLabel;
 	static JLabel opponentLabel;
@@ -75,17 +80,20 @@ public class Battleship extends JFrame
 	    opponentPanel.add(opponentGrid.getOppPanel(), BorderLayout.CENTER);
 		opponentPanel.add(opponentLabel2, BorderLayout.SOUTH);
 		
-		gamePanel.add(grid.getPanel(), BorderLayout.NORTH);
-		
+		gamePanel.add(grid.getPanel(), BorderLayout.NORTH);		
 		gamePanel.add(ribbon.getPanel());
+		
 		panel.add(infoLabel, BorderLayout.NORTH);
 		panel.add(infoLabel2, BorderLayout.SOUTH);
 		panel.add(gamePanel, BorderLayout.CENTER);
 		panel.add(ribbon.getPanel(), BorderLayout.EAST);
+		
 		container.add(panel);
 		container.add(opponentPanel);
+		
 		Menu menu = new Menu();
 	    setJMenuBar(menu); // adds menu object to frame
+	    
 		this.add(container);
 		this.setSize(1025, 550);
 		this.setTitle("Battleship");
@@ -118,7 +126,7 @@ public class Battleship extends JFrame
 	}
 	public static void setInfo(String s)
 	{
-		infoLabel2.setText(s);
+		infoLabel2.setText(s); // info displayed in players Grad label
 	}
 	public static boolean ismyTurn()
 	{
@@ -130,6 +138,6 @@ public class Battleship extends JFrame
 	}
 	public static void setOpponentInfo(String s)
 	{
-		opponentLabel2.setText(s);
+		opponentLabel2.setText(s); // info displayed in opponents Grid
 	}
 }

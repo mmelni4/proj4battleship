@@ -1,3 +1,5 @@
+// Type of ship Aircraft Carrier is of size 5
+
 package Boat;
 import javax.swing.JLabel;
 

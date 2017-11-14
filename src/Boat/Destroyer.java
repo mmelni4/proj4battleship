@@ -1,10 +1,10 @@
-package Boat;
+// Type of ship Destroyer is of size 3
 
+package Boat;
 import javax.swing.JLabel;
 
 import ImageOp.ImgFunc;
 import Logic.Point;
-
 public class Destroyer extends Ship
 {
 	final static int len = 3;

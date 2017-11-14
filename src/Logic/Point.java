@@ -1,3 +1,5 @@
+// class Point returns x and y coordinates to the Ship class
+
 package Logic;
 
 import java.io.Serializable;

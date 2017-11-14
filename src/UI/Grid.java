@@ -1,3 +1,5 @@
+// This Grid class represents player's grid
+
 package UI;
 
 import java.awt.GridLayout;
@@ -50,8 +52,7 @@ public class Grid
 		{
 			for (int j = 0; j < 10; j++)
 			{
-				gridPanel.add(grid[i][j].getImage());
-				
+				gridPanel.add(grid[i][j].getImage());				
 			}
 		}
 	}

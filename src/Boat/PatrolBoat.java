@@ -1,3 +1,5 @@
+// Patrol Boat is  a subclass of class Ship that is of size 2
+
 package Boat;
 
 import javax.swing.JLabel;

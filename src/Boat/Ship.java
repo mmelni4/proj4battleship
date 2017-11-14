@@ -1,3 +1,8 @@
+// Super class Ship includes 5 types of ships subclasses:
+// Carrier, Destroyer, Battleship (Gunship here), PatrolBoat, and Submarine
+// Specifies direction, position coordinates, length, and level of health ->
+// -> that reduces when ship is hit, and equals 0 when ship length becomes 0 (destroyed)
+
 package Boat;
 import javax.swing.JLabel;
 
@@ -7,7 +12,7 @@ import Logic.Point;
 public class Ship 
 {
 	final Direction dir;
-	final Point pos;
+	final Point pos; // has (x,y) coordinates type
 	final int len;
 	public Shiptype type;
 	JLabel body[];

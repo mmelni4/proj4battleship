@@ -15,8 +15,7 @@ import Connection.Server;
 
 /******************************************************************
  *                                                                *
- * Menu class contains JMenu Items with short descriptions        *
- * Features used:                                                 *
+ * Menu class contains JMenu Items with short descriptions        *                                            *
  *                                                                *
  ******************************************************************/
 

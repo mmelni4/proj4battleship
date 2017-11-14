@@ -1,3 +1,7 @@
+// While connection is being established Client inputs server info
+// via Socket instance, that provides stream for input and output
+// After receiving coordinates info, sets information to the South label in players grid
+
 package Connection;
 
 import java.io.*;
@@ -38,8 +42,7 @@ public class Client
             JOptionPane.showMessageDialog(null, "Couldn't get I/O for "
                                + "the connection to: " + ip);
             System.exit(1);
-        }
-        
+        }      
     }
     public void ReceiveData()
     {
@@ -74,7 +77,6 @@ public class Client
         		out = new ObjectOutputStream(echoSocket.getOutputStream());
         	}
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "Could not open input/output object stream");
 		}
     	try 
@@ -95,7 +97,6 @@ public class Client
 			out.close();
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Could not close client connection");
-		}
-       	
+		}      	
     }
 }

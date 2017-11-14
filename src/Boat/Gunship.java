@@ -1,3 +1,7 @@
+// Originally Battleship type of ship of size 4
+// Renamed from Battleship to Gunship to prevent confusion
+// with the name of the GUI class Battleship
+
 package Boat;
 
 import javax.swing.JLabel;
@@ -5,8 +9,6 @@ import javax.swing.JLabel;
 import ImageOp.ImgFunc;
 import Logic.Point;
 
-// Renamed from Battleship to Gunship to prevent confusion
-// with the name of the GUI class Battleship
 public class Gunship extends Ship
 {
 	static final int len = 4;

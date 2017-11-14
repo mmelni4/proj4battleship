@@ -1,3 +1,6 @@
+// ImgFunction class sets images for ship of certain types
+// according to their direction and rescales images to fit the JLabel components
+
 package ImageOp;
 
 import java.awt.GraphicsConfiguration;

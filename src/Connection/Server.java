@@ -1,3 +1,10 @@
+// First player that initiated connection is a server
+// Initiates ServerSocket instance 
+// Displays server info (ip and port)
+// Waiting for client to connect
+// Receives Client socket instance for input and output stream
+// Close connection when game is over
+
 package Connection;
 
 import java.net.*;
@@ -87,7 +94,6 @@ public class Server
         		out = new ObjectOutputStream(clientSocket.getOutputStream());
         	}
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "Server: Could not open output object stream");
 		}
     	try 

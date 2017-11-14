@@ -1,3 +1,5 @@
+// Enum class for ship directions
+
 package Boat;
 
 public enum Direction 

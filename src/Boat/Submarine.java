@@ -1,3 +1,5 @@
+// Submarine is a subclass of a ship class of size 3
+
 package Boat;
 
 import javax.swing.JLabel;
