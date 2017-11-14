@@ -17,6 +17,7 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import Connection.Client;
 import Connection.Server;
@@ -35,6 +36,9 @@ public class Battleship extends JFrame
 	static JLabel opponentLabel2;	
 	static JLabel opponentInfoLabel;
 	static JPanel labelPanel;
+<<<<<<< HEAD
+=======
+>>>>>>> 743378882d7066786067cb75d1e73b00c8c1da25
 	static JLabel letters;
 	private FlowLayout layout;
 	private static Grid grid;
@@ -58,9 +62,11 @@ public class Battleship extends JFrame
 		container = new JPanel();		
 		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
 		layout = new FlowLayout();
+<<<<<<< HEAD
 		labelPanel = new JPanel();
 		labelPanel.setLayout(new BorderLayout());
 	    container.setLayout( layout );
+=======
 		container.setBorder(new EmptyBorder(10,10,10,10));
 		
 		letters = new JLabel("    A           B            C          D"
@@ -73,7 +79,9 @@ public class Battleship extends JFrame
 		infoLabel2 = new JLabel("Updates will be shown here");
 		
 		grid = new Grid();
-		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
+		//grid.getPanel().setLayout(new BorderLayout());
+		//grid.getPanel().add(letters);
+		//gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
 		
 		panel.setLayout(new BorderLayout());
 		
@@ -88,10 +96,7 @@ public class Battleship extends JFrame
 	    opponentPanel.add(opponentGrid.getOppPanel(), BorderLayout.CENTER);
 		opponentPanel.add(opponentLabel2, BorderLayout.SOUTH);
 		
-		gamePanel.add(grid.getPanel(), BorderLayout.NORTH);		
 		gamePanel.add(ribbon.getPanel());
-		
-		panel.add(infoLabel, BorderLayout.NORTH);
 		panel.add(infoLabel2, BorderLayout.SOUTH);
 		panel.add(gamePanel, BorderLayout.CENTER);
 		panel.add(ribbon.getPanel(), BorderLayout.EAST);
@@ -140,7 +145,6 @@ public class Battleship extends JFrame
 	}
 	public static void setInfo(String s)
 	{
-		infoLabel2.setText(s); // info displayed in players Grad label
 	}
 	public static boolean ismyTurn()
 	{
