@@ -18,14 +18,14 @@ public class Client
 {
 	private static String ip;
 	private final static int port = 6789;
-	private static Socket echoSocket;
+	private static Socket serverSocket;
 	private static ObjectInputStream in;
 	private static ObjectOutputStream out;
 	
 	public Client() throws IOException
 	{
 		ip = JOptionPane.showInputDialog("Enter IP address:");
-		echoSocket = null;
+		serverSocket = null;
 		initiateClient();
 	}
     public static void initiateClient() throws IOException 
@@ -35,7 +35,7 @@ public class Client
 
         try
         {
-            echoSocket = new Socket(ip, port);
+        	serverSocket = new Socket(ip, port);
         } catch (UnknownHostException e) {
             JOptionPane.showMessageDialog(null ,"Don't know about host: " + ip);
             System.exit(1);
@@ -47,12 +47,12 @@ public class Client
     }
     public Status ReceiveData()
     {
-    	Status status = Status.EMPTY;
+		Status status = Status.EMPTY;
     	try
     	{
     		if (in == null)
     		{
-    			in = new ObjectInputStream(echoSocket.getInputStream());
+    			in = new ObjectInputStream(serverSocket.getInputStream());
     		}
     	} catch (IOException e)
     	{
@@ -61,11 +61,19 @@ public class Client
     	try 
     	{
 			Point p = (Point) in.readObject();
+			if (p.x < 0 || p.y < 0)
+				return Status.EMPTY;
 			if (Battleship.getGrid().get(p.x, p.y).getShip() == null)
+			{
+				ImgFunc.setMissImage(Battleship.getGrid().get(p.x, p.y).getImage());
 				status = Status.MISS;
+				
+			}
 			else
+			{
+				ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
 				status = Status.HIT;
-			ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
+			}
 		} catch (ClassNotFoundException e) {
 			
 			e.printStackTrace();
@@ -80,7 +88,7 @@ public class Client
         {
         	if (out == null)
         	{
-        		out = new ObjectOutputStream(echoSocket.getOutputStream());
+        		out = new ObjectOutputStream(serverSocket.getOutputStream());
         	}
 		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(null, "Could not open output object stream");
@@ -100,7 +108,7 @@ public class Client
         {
         	if (out == null)
         	{
-        		out = new ObjectOutputStream(echoSocket.getOutputStream());
+        		out = new ObjectOutputStream(serverSocket.getOutputStream());
         	}
 		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(null, "Could not open output object stream");
@@ -114,13 +122,13 @@ public class Client
 			System.out.println(e);
 		}
     }
-    public void ReceiveStatus()
+    public void ReceiveStatus(Point p)
     {
     	try
     	{
     		if (in == null)
     		{
-    			in = new ObjectInputStream(echoSocket.getInputStream());
+    			in = new ObjectInputStream(serverSocket.getInputStream());
     		}
     	} catch (IOException e)
     	{
@@ -130,10 +138,15 @@ public class Client
     	{
 			Status s = (Status) in.readObject();
 			if (s == Status.HIT)
+			{
+				ImgFunc.setHitImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
 				Battleship.setInfo("HIT");
+			}
 			else
+			{
+				ImgFunc.setMissImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
 				Battleship.setInfo("MISS");
-			//ImgFunc.setRedImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
+			}
 		} catch (ClassNotFoundException e) {
 			
 			e.printStackTrace();
@@ -146,7 +159,7 @@ public class Client
     	try 
     	{
     		in.close();
-            echoSocket.close();
+    		serverSocket.close();
 			out.close();
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Could not close client connection");

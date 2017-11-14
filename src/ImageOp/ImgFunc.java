@@ -182,6 +182,40 @@ public class ImgFunc
 			JOptionPane.showMessageDialog(null, "Red image not found");
 		}
 	}
+	public static void setHitImage(JLabel picLabel)
+	{
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+			imageIcon = new ImageIcon("resources\\hit.png");
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel.setIcon(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Red image not found");
+		}
+	}
+	public static void setMissImage(JLabel picLabel)
+	{
+		ImageIcon imageIcon;
+		try
+		{
+		// Resize the image to fit into the JLabel
+			imageIcon = new ImageIcon("resources\\miss.png");
+		Image image = imageIcon.getImage(); // transform it 
+		Image newimg = image.getScaledInstance(IMGSIZE_X, IMGSIZE_Y,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way  
+		imageIcon = new ImageIcon(newimg);  // transform it back
+		picLabel.setIcon(imageIcon);
+		}
+		catch(Exception e)
+		{ 
+			JOptionPane.showMessageDialog(null, "Red image not found");
+		}
+	}
 	public static JLabel getSubmarineImage(int segment)
 	{
 		JLabel picLabel = null;

@@ -45,12 +45,13 @@ public class Server
         { 
 			JOptionPane.showMessageDialog(null, "Port " + port + " is in use. Starting client mode."); 
 			Battleship.setServer(false);
+			Battleship.setTurn(false);
 			return;
         } 
 
 		JOptionPane.showMessageDialog(null, "Connection success");
 		Battleship.setServer(true);
-		
+		Battleship.setTurn(true);
 		try 
 		{ 
 			clientSocket = connectionSocket.accept();
@@ -81,11 +82,19 @@ public class Server
     	try 
     	{
 			Point p = (Point) in.readObject();
+			if (p.x < 0 || p.y < 0)
+				return Status.EMPTY;
 			if (Battleship.getGrid().get(p.x, p.y).getShip() == null)
+			{
+				ImgFunc.setMissImage(Battleship.getGrid().get(p.x, p.y).getImage());
 				status = Status.MISS;
+				
+			}
 			else
+			{
+				ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
 				status = Status.HIT;
-			ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
+			}
 		} catch (ClassNotFoundException e) {
 			
 			e.printStackTrace();
@@ -132,7 +141,7 @@ public class Server
 			JOptionPane.showMessageDialog(null, "Could not send status: " + s);
 		}
     }
-    public void ReceiveStatus()
+	public void ReceiveStatus(Point p)
     {
     	try
     	{
@@ -148,10 +157,16 @@ public class Server
     	{
 			Status s = (Status) in.readObject();
 			if (s == Status.HIT)
+			{
+				ImgFunc.setHitImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
 				Battleship.setInfo("HIT");
+			}
 			else
+			{
+				ImgFunc.setMissImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
 				Battleship.setInfo("MISS");
-			//ImgFunc.setRedImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
+			}
+			
 		} catch (ClassNotFoundException e) {
 			
 			e.printStackTrace();

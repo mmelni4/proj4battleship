@@ -34,4 +34,19 @@ public class Gunship extends Ship
 	{
 		return body[index];
 	}
+	public JLabel indexofBody(Point p)
+	{
+		int index = -1;
+		if (p.x - pos.x != 0)
+			if (p.x - pos.x < 0)
+				index = (p.x - pos.x)*-1;
+			else
+				index = p.x - pos.x;
+		if (p.y - pos.y != 0)
+			if (p.y - pos.y < 0)
+				index = (p.y - pos.y)*-1;
+			else
+				index = p.y - pos.y;
+		return body[index];
+	}
 }

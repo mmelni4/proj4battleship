@@ -265,8 +265,7 @@ public class Cell
 						else
 						{
 							Battleship.setInfo("Board ready. Opponent's turn");
-							try{ Thread.sleep(1000); } catch (InterruptedException e) {}
-							/*Battleship.client.SendStatus(*/Battleship.client.ReceiveData();
+							Battleship.client.SendStatus(Battleship.client.ReceiveData());
 							
 						}
 					}
@@ -308,37 +307,35 @@ public class Cell
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 					{
-						if (Battleship.boardisReady() /*&& Battleship.ismyTurn()*/)
+						if (Battleship.boardisReady() && Battleship.ismyTurn())
 						{
-							// Server
+							// Server Send
 							if (Battleship.server.isServer())
 							{
 								Battleship.server.SendData(pos);
-								//Battleship.server.ReceiveStatus();
+								Battleship.server.ReceiveStatus(pos);
 							}
-							// Client
+							// Client Send
 							else
 							{
 								Battleship.client.SendData(pos);
-								//Battleship.client.ReceiveStatus();
+								Battleship.client.ReceiveStatus(pos);
 							}
-							//Battleship.useTurn();
-						
-						//else if (!Battleship.ismyTurn())
-						//{
-							// Server
+						}
+						else if (Battleship.boardisReady() && !Battleship.ismyTurn())
+						{
+							// Server Receive
 							if (Battleship.isServer())
 							{
-								/*Battleship.server.SendStatus(*/Battleship.server.ReceiveData();
+								Battleship.server.SendStatus(Battleship.server.ReceiveData());
 							}
-							// Client
+							// Client Receive
 							else
 							{
-								/*Battleship.client.SendStatus(*/Battleship.client.ReceiveData();
+								Battleship.client.SendStatus(Battleship.client.ReceiveData());
 							}
-							//Battleship.useTurn();
-						//}
 						}
+						Battleship.useTurn();
 					}
 
 

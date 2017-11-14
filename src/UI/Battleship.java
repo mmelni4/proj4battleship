@@ -7,17 +7,23 @@
 // Another label is to display grid information, 
 // every time Button(JLabel/Cell) is pressed, information about coordinates
 // or when Error is encountered 
+// Letters indicating position of the board are represented as JLabel component
+// nested in the Grid North label area
 
 
 package UI;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
+import Logic.Point;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import Connection.Client;
 import Connection.Server;
@@ -25,19 +31,23 @@ import Connection.Server;
 @SuppressWarnings("serial")
 public class Battleship extends JFrame 
 {
+	static JPanel container; // "parent" panel
 	static Ribbon ribbon; // Buttons to click when placing ships on the grid
-	static JPanel panel; // "parent" panel
+	static JPanel panel; // player's panel
 	static JPanel gamePanel; // "child" panel located on the right that represents player's grid
-	static JPanel opponentPanel; // panel located on the right side, represents opponent's
-	static JPanel container;	
+	static JPanel opponentPanel; // panel located on the right side, represents opponent's	
 	static JLabel infoLabel;
-	static JLabel opponentLabel;
 	static JLabel infoLabel2;
+	static JLabel opponentLabel;
 	static JLabel opponentLabel2;	
-	static JLabel opponentInfoLabel;
 	static JPanel labelPanel;
-	//static JPanel letters;
+	static JPanel labelPanelOp;
 	static JLabel letters;
+	static JLabel lettersOp;
+	static JLabel verticalIndicators;
+	static JLabel verticalIndicatorsOp;
+	static Timer flushtimer;
+	static TimerTask flushtask;
 	private FlowLayout layout;
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
@@ -58,19 +68,26 @@ public class Battleship extends JFrame
 		panel = new JPanel();
 		ribbon = new Ribbon();
 		labelPanel = new JPanel();
+		labelPanelOp = new JPanel();
 		labelPanel.setLayout(new BorderLayout());
+		labelPanelOp.setLayout(new BorderLayout());
 		container = new JPanel();		
-		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
+		container.setLayout(new GridLayout(1,4)); // one row, two columns layout
 		layout = new FlowLayout();
-		letters = new JLabel("    A           B            C          D"
-				+ "           E             F             G          "
-				+ "  H           I           J");
-		//letters = new JPanel();
-		/*JLabel[] labels=new JLabel[10];
-		        for (int i=0;i<10;i++){
-		            labels[i]= new JLabel("     " + i + "     ");
-		            letters.add(labels[i]);
-		        }*/
+		letters = new JLabel("    A            B            C          D"
+				+ "           E             F            G          "
+				+ " H           I           J");
+		lettersOp = new JLabel("    A            B            C          D"
+				+ "           E             F            G          "
+				+ " H           I           J");
+		verticalIndicators = new JLabel();
+		verticalIndicators.setFont(new Font("Serif", Font.BOLD, 15));
+		verticalIndicators.setText("<HTML><br>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>"
+				+ "6<br><br>7<br><br>8<br><br>9<br><br>10<br></HTML>");
+		verticalIndicatorsOp = new JLabel();
+		verticalIndicatorsOp.setFont(new Font("Serif", Font.BOLD, 15));
+		verticalIndicatorsOp.setText("<HTML><br>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>"
+				+ "6<br><br>7<br><br>8<br><br>9<br><br>10<br></HTML>");
 		container.setLayout( layout );
 		container.setBorder(new EmptyBorder(10,10,10,10));
 		
@@ -80,9 +97,6 @@ public class Battleship extends JFrame
 		
 		infoLabel2 = new JLabel("Updates will be shown here");
 		grid = new Grid();
-		//grid.getPanel().setLayout(new BorderLayout());
-		//grid.getPanel().add(letters);
-		//gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
 		
 		panel.setLayout(new BorderLayout());
 		
@@ -91,7 +105,6 @@ public class Battleship extends JFrame
 		opponentPanel = new JPanel();
 		opponentPanel.setLayout(new BorderLayout());
 		opponentLabel = new JLabel("Your Opponent Status");
-		opponentPanel.add(opponentLabel, BorderLayout.NORTH);
 		opponentLabel2 = new JLabel("Updates for Opponent will be shown here");
 		opponentGrid = new OpponentGrid();
 	    opponentPanel.add(opponentGrid.getOppPanel(), BorderLayout.CENTER);
@@ -100,14 +113,18 @@ public class Battleship extends JFrame
 		gamePanel.add(grid.getPanel(), BorderLayout.NORTH);	
 		labelPanel.add(infoLabel, BorderLayout.NORTH);
 		labelPanel.add(letters, BorderLayout.SOUTH);
+		labelPanelOp.add(opponentLabel, BorderLayout.NORTH);
+		labelPanelOp.add(lettersOp, BorderLayout.SOUTH);
 		gamePanel.add(ribbon.getPanel());
+		//gamePanel.add(verticalIndicators, BorderLayout.WEST);
 		panel.add(labelPanel, BorderLayout.NORTH);
-		//panel.add(infoLabel, BorderLayout.NORTH);
+		opponentPanel.add(labelPanelOp, BorderLayout.NORTH);
 		panel.add(infoLabel2, BorderLayout.SOUTH);
 		panel.add(gamePanel, BorderLayout.CENTER);
 		panel.add(ribbon.getPanel(), BorderLayout.EAST);
-		
+		container.add(verticalIndicators);
 		container.add(panel);
+		container.add(verticalIndicatorsOp);
 		container.add(opponentPanel);
 		
 		Menu menu = new Menu();
@@ -155,6 +172,10 @@ public class Battleship extends JFrame
 	{
 		return myturn;
 	}
+	public static void setTurn(boolean b)
+	{
+		myturn = b;
+	}
 	public static void useTurn()
 	{
 		myturn = !myturn;
@@ -162,5 +183,31 @@ public class Battleship extends JFrame
 	public static void setOpponentInfo(String s)
 	{
 		opponentLabel2.setText(s); // info displayed in opponents Grid
+	}
+	public void configureTimer()
+	{
+		// Makes sure the GUI is not lagging behind.
+		// This will cause the CELL action handler not to freeze and let the
+		// GUI update itself
+		flushtask = new TimerTask()
+				{
+
+					@Override
+					public void run() 
+					{
+						if (Battleship.isServer() && Battleship.boardisReady())
+						{
+							Battleship.server.SendData(new Point(-1, 1));
+							Battleship.server.SendStatus(Status.EMPTY);
+						}
+						else if (Battleship.boardisReady())
+						{
+							Battleship.client.SendData(new Point(-1, -1));
+							Battleship.client.SendStatus(Status.EMPTY);
+						}
+					}
+				};
+		flushtimer = new Timer(true);
+		flushtimer.schedule(flushtask, 0, 100);
 	}
 }
