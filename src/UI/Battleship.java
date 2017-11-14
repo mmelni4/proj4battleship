@@ -41,6 +41,7 @@ public class Battleship extends JFrame
 	static JLabel letters;
 	static JLabel lettersOp;
 	static JLabel verticalIndicators;
+	static JLabel verticalIndicatorsOp;
 	private FlowLayout layout;
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
@@ -65,7 +66,7 @@ public class Battleship extends JFrame
 		labelPanel.setLayout(new BorderLayout());
 		labelPanelOp.setLayout(new BorderLayout());
 		container = new JPanel();		
-		container.setLayout(new GridLayout(1,3)); // one row, two columns layout
+		container.setLayout(new GridLayout(1,4)); // one row, two columns layout
 		layout = new FlowLayout();
 		letters = new JLabel("    A            B            C          D"
 				+ "           E             F            G          "
@@ -76,6 +77,10 @@ public class Battleship extends JFrame
 		verticalIndicators = new JLabel();
 		verticalIndicators.setFont(new Font("Serif", Font.BOLD, 15));
 		verticalIndicators.setText("<HTML><br>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>"
+				+ "6<br><br>7<br><br>8<br><br>9<br><br>10<br></HTML>");
+		verticalIndicatorsOp = new JLabel();
+		verticalIndicatorsOp.setFont(new Font("Serif", Font.BOLD, 15));
+		verticalIndicatorsOp.setText("<HTML><br>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>"
 				+ "6<br><br>7<br><br>8<br><br>9<br><br>10<br></HTML>");
 		container.setLayout( layout );
 		container.setBorder(new EmptyBorder(10,10,10,10));
@@ -113,6 +118,7 @@ public class Battleship extends JFrame
 		panel.add(ribbon.getPanel(), BorderLayout.EAST);
 		container.add(verticalIndicators);
 		container.add(panel);
+		container.add(verticalIndicatorsOp);
 		container.add(opponentPanel);
 		
 		Menu menu = new Menu();
