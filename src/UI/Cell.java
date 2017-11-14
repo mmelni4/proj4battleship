@@ -242,6 +242,7 @@ public class Cell
 			@Override
 			public void mouseClicked(MouseEvent arg0)
 			{
+				
 				if (ship == null) // Don't do anything if I clicked a blank cell
 					Battleship.setInfo("Ship: No ship here");
 				else if (Ribbon.selectMode)

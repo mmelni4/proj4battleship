@@ -139,6 +139,17 @@ public class Ribbon
     {
     	shiplist.add(s);
     }
+    public static void removeShip(Ship s)
+        {
+        	shiplist.remove(s);
+        }
+    public static boolean isGridEmpty()
+        {
+        	if (shiplist.size() == 0)
+        		return false;
+        	else
+        		return true;
+        }
     public static boolean shipUsed(Ship s)
     {
     	if (s == null)
