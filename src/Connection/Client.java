@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import ImageOp.ImgFunc;
 import Logic.Point;
 import UI.Battleship;
+import UI.Status;
 
 public class Client
 {
@@ -44,8 +45,9 @@ public class Client
             System.exit(1);
         }      
     }
-    public void ReceiveData()
+    public Status ReceiveData()
     {
+    	Status status = Status.EMPTY;
     	try
     	{
     		if (in == null)
@@ -59,7 +61,10 @@ public class Client
     	try 
     	{
 			Point p = (Point) in.readObject();
-			Battleship.setInfo("Receieved point: " + p);
+			if (Battleship.getGrid().get(p.x, p.y).getShip() == null)
+				status = Status.MISS;
+			else
+				status = Status.HIT;
 			ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
 		} catch (ClassNotFoundException e) {
 			
@@ -67,6 +72,7 @@ public class Client
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Client: Could not receive data");
 		}
+    	return status;
     }
     public void SendData(Point p)
     {
@@ -77,15 +83,62 @@ public class Client
         		out = new ObjectOutputStream(echoSocket.getOutputStream());
         	}
 		} catch (IOException e1) {
-			JOptionPane.showMessageDialog(null, "Could not open input/output object stream");
+			JOptionPane.showMessageDialog(null, "Could not open output object stream");
 		}
     	try 
     	{
 			out.writeObject(p);
 			out.flush();
 		} catch (IOException e) {
-			Battleship.setInfo("Could not send point: " + p);
+			JOptionPane.showMessageDialog(null, "Could not send point: " + p);
 			System.out.println(e);
+		}
+    }
+    public void SendStatus(Status s)
+    {
+        try 
+        {
+        	if (out == null)
+        	{
+        		out = new ObjectOutputStream(echoSocket.getOutputStream());
+        	}
+		} catch (IOException e1) {
+			JOptionPane.showMessageDialog(null, "Could not open output object stream");
+		}
+    	try 
+    	{
+			out.writeObject(s);
+			out.flush();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Could not send status: " + s);
+			System.out.println(e);
+		}
+    }
+    public void ReceiveStatus()
+    {
+    	try
+    	{
+    		if (in == null)
+    		{
+    			in = new ObjectInputStream(echoSocket.getInputStream());
+    		}
+    	} catch (IOException e)
+    	{
+    		JOptionPane.showMessageDialog(null, "Client: Could not open input object stream");
+    	}
+    	try 
+    	{
+			Status s = (Status) in.readObject();
+			if (s == Status.HIT)
+				Battleship.setInfo("HIT");
+			else
+				Battleship.setInfo("MISS");
+			//ImgFunc.setRedImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Client: Could not receive data");
 		}
     }
     public static void CloseConnection()

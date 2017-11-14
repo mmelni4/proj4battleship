@@ -152,6 +152,10 @@ public class Cell
 		
 		return true;
 	}
+	public Ship getShip()
+	{
+		return ship;
+	}
 	private void paintShip()
 	{
 		Cell c; // use this to save a few memory references, and make code easier to read
@@ -251,7 +255,21 @@ public class Cell
 					Ribbon.disableSelected();
 					Ribbon.shipsUsed++;
 					if (Ribbon.shipsUsed == 5)
+					{
 						Battleship.setReady(true);
+						Ribbon.setEnableAllButtons(false);
+						if (Battleship.isServer())
+						{
+							Battleship.setInfo("Board ready. Your turn.");
+						}
+						else
+						{
+							Battleship.setInfo("Board ready. Opponent's turn");
+							try{ Thread.sleep(1000); } catch (InterruptedException e) {}
+							/*Battleship.client.SendStatus(*/Battleship.client.ReceiveData();
+							
+						}
+					}
 				}
 				else
 					Battleship.setInfo("Ship: " + ship.toString());
@@ -290,32 +308,37 @@ public class Cell
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 					{
-						//if (Battleship.boardisReady() && Battleship.ismyTurn())
-						//{
+						if (Battleship.boardisReady() /*&& Battleship.ismyTurn()*/)
+						{
 							// Server
 							if (Battleship.server.isServer())
 							{
 								Battleship.server.SendData(pos);
+								//Battleship.server.ReceiveStatus();
 							}
 							// Client
 							else
 							{
 								Battleship.client.SendData(pos);
+								//Battleship.client.ReceiveStatus();
 							}
-							Battleship.useTurn();
-						//}
+							//Battleship.useTurn();
+						
 						//else if (!Battleship.ismyTurn())
 						//{
+							// Server
 							if (Battleship.isServer())
 							{
-								Battleship.server.ReceiveData();
+								/*Battleship.server.SendStatus(*/Battleship.server.ReceiveData();
 							}
+							// Client
 							else
 							{
-								Battleship.client.ReceiveData();
+								/*Battleship.client.SendStatus(*/Battleship.client.ReceiveData();
 							}
-							Battleship.useTurn();
+							//Battleship.useTurn();
 						//}
+						}
 					}
 
 

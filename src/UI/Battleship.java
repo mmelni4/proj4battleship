@@ -34,6 +34,8 @@ public class Battleship extends JFrame
 	static JLabel infoLabel2;
 	static JLabel opponentLabel2;	
 	static JLabel opponentInfoLabel;
+	static JPanel labelPanel;
+	static JLabel letters;
 	private FlowLayout layout;
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
@@ -56,14 +58,20 @@ public class Battleship extends JFrame
 		container = new JPanel();		
 		container.setLayout(new GridLayout(1,2)); // one row, two columns layout
 		layout = new FlowLayout();
+		labelPanel = new JPanel();
+		labelPanel.setLayout(new BorderLayout());
 	    container.setLayout( layout );
 		container.setBorder(new EmptyBorder(10,10,10,10));
 		
+		letters = new JLabel("    A           B            C          D"
+				+ "           E             F             G          "
+				+ "  H           I           J");
+		
 		gamePanel = new JPanel();
 		gamePanel.setLayout(new BorderLayout());
-		infoLabel = new JLabel("Your Game Status");
-		
+		infoLabel = new JLabel("Your Game Status");		
 		infoLabel2 = new JLabel("Updates will be shown here");
+		
 		grid = new Grid();
 		gamePanel.add(grid.getPanel(), BorderLayout.CENTER);
 		
@@ -87,6 +95,8 @@ public class Battleship extends JFrame
 		panel.add(infoLabel2, BorderLayout.SOUTH);
 		panel.add(gamePanel, BorderLayout.CENTER);
 		panel.add(ribbon.getPanel(), BorderLayout.EAST);
+		labelPanel.add(infoLabel, BorderLayout.NORTH);
+		labelPanel.add(letters, BorderLayout.SOUTH);
 		
 		container.add(panel);
 		container.add(opponentPanel);
@@ -123,6 +133,10 @@ public class Battleship extends JFrame
 	public static Grid getGrid()
 	{
 		return grid;
+	}
+	public static OpponentGrid getOppGrid()
+	{
+		return opponentGrid;
 	}
 	public static void setInfo(String s)
 	{
