@@ -44,7 +44,7 @@ public class Battleship extends JFrame
 	static JLabel verticalIndicators;
 	static JLabel verticalIndicatorsOp;
 	public static Point lastPoint;
-	public static int hitCount = 0;
+	public static int hitsCount = 0;
 	public static int missCount = 0;
 	private FlowLayout layout;
 	private static Grid grid;
@@ -70,7 +70,7 @@ public class Battleship extends JFrame
 		labelPanel.setLayout(new BorderLayout());
 		labelPanelOp.setLayout(new BorderLayout());
 		container = new JPanel();		
-		container.setLayout(new GridLayout(1,4)); // one row, two columns layout
+		container.setLayout(new GridLayout(1,4)); // one row, four columns layout
 		layout = new FlowLayout();
 		letters = new JLabel("    A            B            C          D"
 				+ "           E             F            G          "
@@ -117,7 +117,6 @@ public class Battleship extends JFrame
 		labelPanelOp.add(opponentLabel, BorderLayout.NORTH);
 		labelPanelOp.add(lettersOp, BorderLayout.SOUTH);
 		gamePanel.add(ribbon.getPanel());
-		//gamePanel.add(verticalIndicators, BorderLayout.WEST);
 		panel.add(labelPanel, BorderLayout.NORTH);
 		opponentPanel.add(labelPanelOp, BorderLayout.NORTH);
 		panel.add(infoLabel2, BorderLayout.SOUTH);
@@ -187,11 +186,11 @@ public class Battleship extends JFrame
 	}
 	public static int getHits()
 	{
-		return hitCount;
+		return hitsCount;
 	}
 	public static void setHits()
 	{
-		hitCount++;
+		hitsCount++;
 	}
 	public static int getMisses()
 	{

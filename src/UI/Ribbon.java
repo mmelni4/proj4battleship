@@ -158,4 +158,8 @@ public class Ribbon
     		return true;
     	return false;
     }
+    public static int getShipsLeft()
+    {
+    	return shiplist.size();
+    }
 }
