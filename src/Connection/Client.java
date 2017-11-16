@@ -22,6 +22,7 @@ public class Client
 	private static ObjectInputStream in;
 	private static ObjectOutputStream out;
 	public SocketAddress sockAdds;
+	private int hitsCount = 0;
 	
 	public Client() throws IOException
 	{
@@ -141,7 +142,7 @@ public class Client
 			if (s == Status.HIT)
 			{
 				ImgFunc.setHitImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
-				Battleship.setHits();
+				setHits();
 				Battleship.setInfo("HIT");
 			}
 			else
@@ -167,4 +168,14 @@ public class Client
 			JOptionPane.showMessageDialog(null, "Could not close client connection");
 		}      	
     }
+ // Access modifiers for menu item statistics, label for keeping track of hits
+ 	public void setHits()
+ 	{
+ 		hitsCount++;
+ 	}
+ 	
+ 	public int getHits()
+ 	{
+ 		return hitsCount;
+ 	}
 }

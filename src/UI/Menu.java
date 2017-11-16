@@ -1,13 +1,11 @@
 package UI;
 
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -158,7 +156,8 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 			stats.add(data);
 			
 			//data=new JLabel("Hits Info:");
-			data=new JLabel(Integer.toString(Battleship.hitsCount));
+			if(!Battleship.server.isServer())
+				data=new JLabel(Integer.toString(Battleship.client.getHits()));
 			stats.add(data);
 			
 			data=new JLabel("Misses:");
@@ -182,7 +181,7 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 			
 			statistics.add(stats);
 			//statistics.pack();
-			statistics.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			//statistics.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			statistics.setVisible(true);				
 		}
 		
