@@ -21,6 +21,7 @@ public class Client
 	private static Socket serverSocket;
 	private static ObjectInputStream in;
 	private static ObjectOutputStream out;
+	public SocketAddress sockAdds;
 	
 	public Client() throws IOException
 	{
@@ -140,6 +141,7 @@ public class Client
 			if (s == Status.HIT)
 			{
 				ImgFunc.setHitImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
+				Battleship.setHits();
 				Battleship.setInfo("HIT");
 			}
 			else
