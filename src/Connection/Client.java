@@ -23,6 +23,7 @@ public class Client
 	private static ObjectOutputStream out;
 	public SocketAddress sockAdds;
 	private int hitsCount = 0;
+	private int missCount = 0;
 	
 	public Client() throws IOException
 	{
@@ -148,6 +149,7 @@ public class Client
 			else
 			{
 				ImgFunc.setMissImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
+				setMisses();
 				Battleship.setInfo("MISS");
 			}
 		} catch (ClassNotFoundException e) {
@@ -177,5 +179,15 @@ public class Client
  	public int getHits()
  	{
  		return hitsCount;
+ 	}
+ 	
+ 	public void setMisses()
+ 	{
+ 		missCount++;
+ 	}
+ 	
+ 	public int getMisses()
+ 	{
+ 		return missCount;
  	}
 }
