@@ -256,17 +256,31 @@ public class Cell
 					Ribbon.shipsUsed++;
 					if (Ribbon.shipsUsed == 5)
 					{
-						Battleship.setReady(true);
+						Battleship.setInfo("Waiting for opponent to be ready");
 						Ribbon.setEnableAllButtons(false);
+						// Server
+						if (Battleship.isServer())
+						{
+							Battleship.server.SendData(new Point(1337,1337));
+							Battleship.server.ReceiveData();
+							//Battleship.server.SendStatus(Battleship.server.ReceiveData());
+						}
+						// Client
+						else
+						{
+							Battleship.client.SendData(new Point(1337,1337));
+							Battleship.client.ReceiveData();
+						}
+						
 						if (Battleship.isServer())
 						{
 							Battleship.setInfo("Board ready. Your turn.");
+							Battleship.setTurn(true);
 						}
 						else
 						{
 							Battleship.setInfo("Board ready. Opponent's turn");
-							Battleship.client.SendStatus(Battleship.client.ReceiveData());
-							
+							Battleship.client.ReceiveData();
 						}
 					}
 				}
@@ -300,42 +314,43 @@ public class Cell
 	
 		});
 	}
-	private void addOppListener()
+	private synchronized void addOppListener()
 	{
 		img.addMouseListener(new MouseListener()
 				{
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 					{
-						if (Battleship.boardisReady() && Battleship.ismyTurn())
+						if (Battleship.boardisReady())
 						{
-							// Server Send
-							if (Battleship.server.isServer())
+							// Attacker
+							if (Battleship.ismyTurn()) // If it is my turn:
 							{
-								Battleship.server.SendData(pos);
-								Battleship.server.ReceiveStatus(pos);
+								// Server Send
+								if (Battleship.server.isServer())
+								{
+									Battleship.server.SendData(pos);
+									Battleship.server.ReceiveData();
+								}
+								// Client Send
+								else
+								{
+									Battleship.client.SendData(pos);
+									Battleship.client.ReceiveData();
+								}
 							}
-							// Client Send
-							else
+							// Waiting
+							else // If it isn't my turn
 							{
-								Battleship.client.SendData(pos);
-								Battleship.client.ReceiveStatus(pos);
+								// Server Receive
+								if (Battleship.isServer())
+									Battleship.server.ReceiveData();
+								// Client Receive
+								else
+									Battleship.client.ReceiveData();
 							}
+							Battleship.useTurn();
 						}
-						else if (Battleship.boardisReady() && !Battleship.ismyTurn())
-						{
-							// Server Receive
-							if (Battleship.isServer())
-							{
-								Battleship.server.SendStatus(Battleship.server.ReceiveData());
-							}
-							// Client Receive
-							else
-							{
-								Battleship.client.SendStatus(Battleship.client.ReceiveData());
-							}
-						}
-						Battleship.useTurn();
 					}
 
 

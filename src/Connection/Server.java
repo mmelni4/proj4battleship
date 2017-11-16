@@ -16,6 +16,7 @@ import Logic.Point;
 import UI.Battleship;
 import UI.Status;
 
+import java.awt.HeadlessException;
 import java.io.*; 
 
 public class Server 
@@ -66,7 +67,7 @@ public class Server
 	{
 		return Battleship.isServer();
 	}
-	public Status ReceiveData()
+	public void ReceiveData()
     {
 		Status status = Status.EMPTY;
     	try
@@ -77,31 +78,59 @@ public class Server
     		}
     	} catch (IOException e)
     	{
-    		JOptionPane.showMessageDialog(null, "Client: Could not open input object stream");
+    		JOptionPane.showMessageDialog(null, "Server: Could not open input object stream");
+    		System.exit(0);
     	}
+    		
     	try 
     	{
-			Point p = (Point) in.readObject();
-			if (p.x < 0 || p.y < 0)
-				return Status.EMPTY;
-			if (Battleship.getGrid().get(p.x, p.y).getShip() == null)
-			{
-				ImgFunc.setMissImage(Battleship.getGrid().get(p.x, p.y).getImage());
-				status = Status.MISS;
-				
-			}
-			else
-			{
-				ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
-				status = Status.HIT;
-			}
-		} catch (ClassNotFoundException e) {
-			
+   			Object d = in.readObject();
+   			// Point p = (Point) in.readObject();
+   			Point p = null;
+   			if (d instanceof Point)
+   			{
+   				p = (Point) d;
+   				if (p.x == 1337 || p.y == 1337)
+   				{
+  					Battleship.setReady(true);
+   					SendStatus(Status.EMPTY);
+   					return;
+   				}
+   			
+   				if (Battleship.getGrid().get(p.x, p.y).getShip() == null)
+   				{
+   					ImgFunc.setMissImage(Battleship.getGrid().get(p.x, p.y).getImage());
+   					SendStatus(Status.MISS);		
+   				}
+   				else
+   				{
+   					ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
+   					SendStatus(Status.HIT);
+   				}
+   			}
+   			else if (d instanceof Status)
+   			{
+   				Status s = (Status) d;
+    			Point pos = Battleship.lastPoint;
+    			if (s == Status.HIT)
+    			{
+    				ImgFunc.setHitImage(Battleship.getOppGrid().get(pos.x, pos.y).getImage());
+    				Battleship.setHits();
+    				Battleship.setInfo("HIT");
+    			}
+    			else if (s == Status.MISS)
+    			{
+    				ImgFunc.setMissImage(Battleship.getOppGrid().get(pos.x, pos.y).getImage());
+    				Battleship.setMisses();
+    				Battleship.setInfo("MISS");
+    			}   				
+   			}
+    		
+    	} catch (ClassNotFoundException e) {	
 			e.printStackTrace();
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Client: Could not receive data");
+    	} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Server: Could not receive data");
 		}
-    	return status;
     }
 	public void SendData(Point p)
     {
@@ -113,9 +142,11 @@ public class Server
         	}
 		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(null, "Server: Could not open output object stream");
+			System.exit(0);
 		}
     	try 
     	{
+    		Battleship.lastPoint = p;
 			out.writeObject(p);
 			out.flush();
 		} catch (IOException e) {
@@ -132,6 +163,7 @@ public class Server
         	}
 		} catch (IOException e1) {
 			JOptionPane.showMessageDialog(null, "Server: Could not open output object stream");
+			System.exit(0); 
 		}
     	try 
     	{
@@ -139,39 +171,6 @@ public class Server
 			out.flush();
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Could not send status: " + s);
-		}
-    }
-	public void ReceiveStatus(Point p)
-    {
-    	try
-    	{
-    		if (in == null)
-    		{
-    			in = new ObjectInputStream(clientSocket.getInputStream());
-    		}
-    	} catch (IOException e)
-    	{
-    		JOptionPane.showMessageDialog(null, "Client: Could not open input object stream");
-    	}
-    	try 
-    	{
-			Status s = (Status) in.readObject();
-			if (s == Status.HIT)
-			{
-				ImgFunc.setHitImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
-				Battleship.setInfo("HIT");
-			}
-			else
-			{
-				ImgFunc.setMissImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
-				Battleship.setInfo("MISS");
-			}
-			
-		} catch (ClassNotFoundException e) {
-			
-			e.printStackTrace();
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Client: Could not receive data");
 		}
     }
 	private static void CloseConnection()

@@ -18,9 +18,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import Logic.Point;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -46,8 +43,9 @@ public class Battleship extends JFrame
 	static JLabel lettersOp;
 	static JLabel verticalIndicators;
 	static JLabel verticalIndicatorsOp;
-	static Timer flushtimer;
-	static TimerTask flushtask;
+	public static Point lastPoint;
+	public static int hitCount = 0;
+	public static int missCount = 0;
 	private FlowLayout layout;
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
@@ -81,6 +79,9 @@ public class Battleship extends JFrame
 				+ "           E             F            G          "
 				+ " H           I           J");
 		verticalIndicators = new JLabel();
+		
+		//configureTimer();
+		
 		verticalIndicators.setFont(new Font("Serif", Font.BOLD, 15));
 		verticalIndicators.setText("<HTML><br>1<br><br>2<br><br>3<br><br>4<br><br>5<br><br>"
 				+ "6<br><br>7<br><br>8<br><br>9<br><br>10<br></HTML>");
@@ -184,30 +185,20 @@ public class Battleship extends JFrame
 	{
 		opponentLabel2.setText(s); // info displayed in opponents Grid
 	}
-	public void configureTimer()
+	public static int getHits()
 	{
-		// Makes sure the GUI is not lagging behind.
-		// This will cause the CELL action handler not to freeze and let the
-		// GUI update itself
-		flushtask = new TimerTask()
-				{
-
-					@Override
-					public void run() 
-					{
-						if (Battleship.isServer() && Battleship.boardisReady())
-						{
-							Battleship.server.SendData(new Point(-1, 1));
-							Battleship.server.SendStatus(Status.EMPTY);
-						}
-						else if (Battleship.boardisReady())
-						{
-							Battleship.client.SendData(new Point(-1, -1));
-							Battleship.client.SendStatus(Status.EMPTY);
-						}
-					}
-				};
-		flushtimer = new Timer(true);
-		flushtimer.schedule(flushtask, 0, 100);
+		return hitCount;
+	}
+	public static void setHits()
+	{
+		hitCount++;
+	}
+	public static int getMisses()
+	{
+		return missCount;
+	}
+	public static void setMisses()
+	{
+		missCount++;
 	}
 }
