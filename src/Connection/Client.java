@@ -21,6 +21,7 @@ public class Client
 	private static Socket serverSocket;
 	private static ObjectInputStream in;
 	private static ObjectOutputStream out;
+	public SocketAddress sockAdds;
 	
 	public Client() throws IOException
 	{
@@ -148,6 +149,43 @@ public class Client
 			System.out.println(e);
 		}
     }
+<<<<<<< HEAD
+=======
+    public void ReceiveStatus(Point p)
+    {
+    	try
+    	{
+    		if (in == null)
+    		{
+    			in = new ObjectInputStream(serverSocket.getInputStream());
+    		}
+    	} catch (IOException e)
+    	{
+    		JOptionPane.showMessageDialog(null, "Client: Could not open input object stream");
+    	}
+    	try 
+    	{
+			Status s = (Status) in.readObject();
+			if (s == Status.HIT)
+			{
+				ImgFunc.setHitImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
+				Battleship.setHits();
+				Battleship.setInfo("HIT");
+			}
+			else
+			{
+				ImgFunc.setMissImage(Battleship.getOppGrid().get(p.x, p.y).getImage());
+				Battleship.setMisses();
+				Battleship.setInfo("MISS");
+			}
+		} catch (ClassNotFoundException e) {
+			
+			e.printStackTrace();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Client: Could not receive data");
+		}
+    }
+>>>>>>> 97d4cfe6841e9caecb20c378b4f0980f9087c313
     public static void CloseConnection()
     {
     	try 

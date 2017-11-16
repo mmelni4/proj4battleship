@@ -18,6 +18,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import Logic.Point;
+<<<<<<< HEAD
+=======
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.JButton;
+>>>>>>> 97d4cfe6841e9caecb20c378b4f0980f9087c313
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -54,6 +61,8 @@ public class Battleship extends JFrame
 	public static Server server;
 	public static Client client;
 	private static boolean myturn = false;
+	static int hitsCount = 0;
+	static int missCount = 0;
 	
 	public static void main(String args[])
 	{
@@ -201,4 +210,23 @@ public class Battleship extends JFrame
 	{
 		missCount++;
 	}
+ 	public static void setHits()
+ 	{
+ 		hitsCount++;
+ 	}
+ 	
+ 	public static int getHits()
+ 	{
+ 		return hitsCount;
+ 	}
+ 	public static void setMisses()
+ 	{
+ 		missCount++;
+ 	}
+ 	
+ 	public int getMisses()
+ 	{
+ 		return missCount;
+ 	}
+
 }

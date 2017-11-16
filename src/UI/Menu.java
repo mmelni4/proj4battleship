@@ -151,6 +151,7 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 			JPanel right = new JPanel();
 			
 			stats.setLayout(new GridLayout(6,2));
+<<<<<<< HEAD
 			stats.add(new JLabel("Hits:"));
 			
 			stats.add(new JLabel("Hits Info:"));
@@ -159,6 +160,33 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 			stats.add(new JLabel(Integer.toString(Battleship.getMisses())));
 			stats.add(new JLabel("Remaining Ships:"     ));
 			stats.add(new JLabel("Remaining Ships Info:"));
+=======
+			
+			data=new JLabel("Hits:");
+			stats.add(data);
+			
+			//data=new JLabel("Hits Info:");
+			if(!Battleship.server.isServer())
+				data=new JLabel(Integer.toString(Battleship.hitsCount));
+			else
+				data=new JLabel(Integer.toString(Battleship.hitsCount));
+			stats.add(data);
+			
+			data = new JLabel("Misses");
+			stats.add(data);
+			
+			if(!Battleship.server.isServer())
+				data=new JLabel(Integer.toString(Battleship.missCount));
+			else
+				data=new JLabel(Integer.toString(Battleship.missCount));
+			stats.add(data);
+			
+			data=new JLabel("Remaining Ships:");
+			stats.add(data);
+			
+			data=new JLabel("Remaining Ships Info:");
+			stats.add(data);
+>>>>>>> 97d4cfe6841e9caecb20c378b4f0980f9087c313
 			
 			stats.add(left);
 			stats.add(right);
@@ -178,7 +206,9 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 				initiateStatistics();	
 			}	
 		}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 97d4cfe6841e9caecb20c378b4f0980f9087c313
 }
-
