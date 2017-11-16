@@ -74,11 +74,13 @@ public class Client
     			if (Battleship.getGrid().get(p.x, p.y).getShip() == null)
     			{
     				ImgFunc.setMissImage(Battleship.getGrid().get(p.x, p.y).getImage());
+    				Battleship.setMisses();
     				SendStatus(Status.MISS);
     			}
     			else
     			{
     				ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
+    				Battleship.setHits();
     				SendStatus(Status.HIT);
     			}
     		}
@@ -89,11 +91,14 @@ public class Client
     			if (s == Status.HIT)
     			{
     				ImgFunc.setHitImage(Battleship.getOppGrid().get(pos.x, pos.y).getImage());
+    				//Battleship.setHits();
+    				Battleship.setOpHits();
     				Battleship.setInfo("HIT");
     			}
     			else if (s == Status.MISS)
     			{
     				ImgFunc.setMissImage(Battleship.getOppGrid().get(pos.x, pos.y).getImage());
+    				Battleship.setOpMiss();
     				Battleship.setInfo("MISS");
     			}    				
     		}

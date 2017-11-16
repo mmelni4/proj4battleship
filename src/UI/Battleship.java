@@ -45,7 +45,9 @@ public class Battleship extends JFrame
 	static JLabel verticalIndicatorsOp;
 	public static Point lastPoint;
 	public static int hitsCount = 0;
+	public static int opHitsCount = 0;
 	public static int missCount = 0;
+	public static int opMissCount = 0;
 	private FlowLayout layout;
 	private static Grid grid;
 	private static OpponentGrid opponentGrid;
@@ -184,20 +186,22 @@ public class Battleship extends JFrame
 	{
 		opponentLabel2.setText(s); // info displayed in opponents Grid
 	}
-	public static int getHits()
-	{
-		return hitsCount;
-	}
+
 	public static void setHits()
 	{
 		hitsCount++;
 	}
-	public static int getMisses()
-	{
-		return missCount;
-	}
+
 	public static void setMisses()
 	{
 		missCount++;
+	}
+	public static void setOpHits()
+	{
+		opHitsCount++;
+	}
+	public static void setOpMiss()
+	{
+		opMissCount++;
 	}
 }

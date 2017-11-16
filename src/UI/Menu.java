@@ -152,22 +152,34 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 			
 			stats.setLayout(new GridLayout(6,2));
 			
-			data=new JLabel("Hits:");
+			data=new JLabel("# of Times you've been hit:");
 			stats.add(data);
 			
 			data=new JLabel(Integer.toString(Battleship.hitsCount));
 			stats.add(data);
 			
-			data = new JLabel("Misses");
+			data = new JLabel("# of Times Opponent Missed");
 			stats.add(data);
 			
 			data=new JLabel(Integer.toString(Battleship.missCount));
 			stats.add(data);
 			
-			data=new JLabel("Remaining Ships:");
+			data=new JLabel("# of Remaining Ships you have:");
 			stats.add(data);
 			
 			data=new JLabel(Integer.toString(Ribbon.getShipsLeft()));
+			stats.add(data);
+			
+			data=new JLabel("# of Times you hit the opponent:");
+			stats.add(data);
+			
+			data=new JLabel(Integer.toString(Battleship.opHitsCount));
+			stats.add(data);
+			
+			data = new JLabel("# of Times You Missed");
+			stats.add(data);
+			
+			data=new JLabel(Integer.toString(Battleship.opMissCount));
 			stats.add(data);
 			
 			stats.add(left);
