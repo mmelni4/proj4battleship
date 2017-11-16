@@ -157,18 +157,18 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener{
 			
 			//data=new JLabel("Hits Info:");
 			if(!Battleship.server.isServer())
-				data=new JLabel(Integer.toString(Battleship.client.getHits()));
+				data=new JLabel(Integer.toString(Battleship.hitsCount));
 			else
-				data=new JLabel(Integer.toString(Battleship.server.getHits()));
+				data=new JLabel(Integer.toString(Battleship.hitsCount));
 			stats.add(data);
 			
 			data = new JLabel("Misses");
 			stats.add(data);
 			
 			if(!Battleship.server.isServer())
-				data=new JLabel(Integer.toString(Battleship.client.getMisses()));
+				data=new JLabel(Integer.toString(Battleship.missCount));
 			else
-				data=new JLabel(Integer.toString(Battleship.server.getMisses()));
+				data=new JLabel(Integer.toString(Battleship.missCount));
 			stats.add(data);
 			
 			data=new JLabel("Remaining Ships:");

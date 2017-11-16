@@ -26,8 +26,6 @@ public class Server
 	private static ObjectInputStream in;
 	private static ObjectOutputStream out;
 	private static String ip;
-	private int hitsCount = 0;
-	private int missCount = 0;
 	
 	public Server()
 	{	
@@ -89,14 +87,12 @@ public class Server
 			if (Battleship.getGrid().get(p.x, p.y).getShip() == null)
 			{
 				ImgFunc.setMissImage(Battleship.getGrid().get(p.x, p.y).getImage());
-				setMisses();
 				status = Status.MISS;
 				
 			}
 			else
 			{
 				ImgFunc.setRedImage(Battleship.getGrid().get(p.x, p.y).getImage());
-				setHits();
 				status = Status.HIT;
 			}
 		} catch (ClassNotFoundException e) {
@@ -194,23 +190,4 @@ public class Server
 			JOptionPane.showMessageDialog(null, "Could not close server connection");
 		} 
 	}
-	 // Access modifiers for menu item statistics, label for keeping track of hits
- 	public void setHits()
- 	{
- 		hitsCount++;
- 	}
- 	
- 	public int getHits()
- 	{
- 		return hitsCount;
- 	}
- 	public void setMisses()
- 	{
- 		missCount++;
- 	}
- 	
- 	public int getMisses()
- 	{
- 		return missCount;
- 	}
 } 

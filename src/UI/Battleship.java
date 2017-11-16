@@ -32,7 +32,6 @@ import Connection.Server;
 @SuppressWarnings("serial")
 public class Battleship extends JFrame 
 {
-	//static int hitsCount = 0;
 	static JPanel container; // "parent" panel
 	static Ribbon ribbon; // Buttons to click when placing ships on the grid
 	static JPanel panel; // player's panel
@@ -58,7 +57,8 @@ public class Battleship extends JFrame
 	public static Server server;
 	public static Client client;
 	private static boolean myturn = false;
-	
+	static int hitsCount = 0;
+	static int missCount = 0;
 	
 	public static void main(String args[])
 	{
@@ -213,15 +213,23 @@ public class Battleship extends JFrame
 		flushtimer = new Timer(true);
 		flushtimer.schedule(flushtask, 0, 100);
 	}
-	/*
-	// Access modifiers for menu item statistics, label for keeping track of hits
-	public void setHits()
-	{
-		hitsCount++;
-	}
-	
-	public int getHits()
-	{
-		return hitsCount;
-	}*/
+ 	public static void setHits()
+ 	{
+ 		hitsCount++;
+ 	}
+ 	
+ 	public static int getHits()
+ 	{
+ 		return hitsCount;
+ 	}
+ 	public static void setMisses()
+ 	{
+ 		missCount++;
+ 	}
+ 	
+ 	public int getMisses()
+ 	{
+ 		return missCount;
+ 	}
+
 }
