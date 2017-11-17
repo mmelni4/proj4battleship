@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import ImageOp.ImgFunc;
 import Logic.Point;
 import UI.Battleship;
+import UI.Ribbon;
 import UI.Status;
 
 import java.awt.HeadlessException;
@@ -133,6 +134,11 @@ public class Server
     	} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Server: Could not receive data");
 		}
+        finally
+        {
+          if(Ribbon.getShipsLeft()==0)
+        	  Battleship.setGameOver(true);
+        }
     }
 	public void SendData(Point p)
     {

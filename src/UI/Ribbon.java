@@ -143,13 +143,13 @@ public class Ribbon
         {
         	shiplist.remove(s);
         }
-    public static boolean isGridEmpty()
+    /*public static void isGridEmpty()
         {
         	if (shiplist.size() == 0)
-        		return false;
+        		Battleship.setGameOver(false);
         	else
-        		return true;
-        }
+        		Battleship.setGameOver(true);;
+        }*/
     public static boolean shipUsed(Ship s)
     {
     	if (s == null)

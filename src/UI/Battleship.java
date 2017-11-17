@@ -20,6 +20,7 @@ import java.awt.GridLayout;
 import Logic.Point;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import Connection.Client;
@@ -56,6 +57,7 @@ public class Battleship extends JFrame
 	public static Server server;
 	public static Client client;
 	private static boolean myturn = false;
+	static boolean finishGame;
 	
 	public static void main(String args[])
 	{
@@ -203,5 +205,15 @@ public class Battleship extends JFrame
 	public static void setOpMiss()
 	{
 		opMissCount++;
+	}
+	public static boolean getGameOver()
+	{
+		//JOptionPane.showMessageDialog(null, "Game Over!");
+		return finishGame;	  
+	}
+
+	public static void setGameOver(boolean isFinished)
+	{
+	 	finishGame = isFinished;	  
 	}
 }
